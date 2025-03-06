@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Malware Simulation - Automatic File Download</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #000;
+        color: #00ff00;
+        text-align: center;
+        padding: 50px;
+      }
+
+      h1 {
+        font-size: 3em;
+        margin-bottom: 20px;
+      }
+
+      p {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Malware Simulation - Warning!</h1>
+    <p>
+      Warning! Your computer has been infected with malware! Please stop using
+      your computer immediately.
+    </p>
+
+    <script>
+      // Function to be executed when the page is fully loaded
+      window.onload = function () {
+        // Creating content for the .exe file
+        const textContent =
+          "This is an .exe file trying to mimic a file from Microsoft!";
+        const blob = new Blob([textContent], {
+          type: "application/x-msdownload", // Specifies the file type as an application
+        });
+
+        // Creating a link element
+        const link = document.createElement("a");
+
+        // Creating a URL from the Blob
+        link.href = URL.createObjectURL(blob);
+        link.download = "Malware.exe"; // Name of the file to be downloaded
+
+        // Simulating a click on the link to automatically download the file
+        document.body.appendChild(link); // Adding the link to the DOM
+        link.click(); // Automatic click
+        document.body.removeChild(link); // Removing the link after the click
+      };
+    </script>
+  </body>
+</html>
