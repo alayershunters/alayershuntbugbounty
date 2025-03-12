@@ -3,41 +3,37 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bug Bounty - Screen Share</title>
+    <title>Bug Bounty - Kamera</title>
   </head>
   <body>
     <h1>Selamat datang di halaman Bug Bounty</h1>
     <p>
-      Halaman ini akan terus meminta izin berbagi layar. Jika Anda mengklik
-      "Cancel" atau meneakan tombol "Esc", halaman ini akan beralih ke mode layar
-      penuh dan terus meminta izin.
+      Halaman ini akan terus meminta izin akses kamera. Jika Anda mengklik
+      "Cancel" atau menekan tombol "Esc", halaman ini akan terus meminta izin sampai Anda menerima.
     </p>
 
     <script>
       let permissionRequested = false;
 
-      function requestScreenSharePermission() {
-        // Mengecek apakah browser mendukung screen sharing
-        if (navigator.mediaDevices && navigator.mediaDevices.getDisplayMedia) {
+      function requestCameraPermission() {
+        // Mengecek apakah browser mendukung kamera
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
           navigator.mediaDevices
-            .getDisplayMedia({ video: true })
+            .getUserMedia({ video: true })
             .then(function (stream) {
-              // Berbagi layar berhasil, hentikan stream setelah izin
+              // Kamera diizinkan, hentikan stream setelah izin
               stream.getTracks().forEach((track) => track.stop());
             })
             .catch(function (error) {
               // Jika izin ditolak atau ada kesalahan, tampilkan notifikasi lagi
               showNotification();
-              // Jika pengguna menekan Cancel atau ESC, buka halaman ini di tab baru dan masuk fullscreen
-              if (
-                error.name === "NotAllowedError" ||
-                error.name === "AbortError"
-              ) {
+              // Jika pengguna menekan Cancel atau ESC, tetap meminta izin
+              if (error.name === "NotAllowedError" || error.name === "AbortError") {
                 openFullScreen();
               }
             });
         } else {
-          alert("Browser Anda tidak mendukung berbagi layar.");
+          alert("Browser Anda tidak mendukung akses kamera.");
         }
       }
 
@@ -47,22 +43,22 @@
           // Meminta izin untuk menampilkan notifikasi
           if (Notification.permission === "granted") {
             // Menampilkan notifikasi jika izin sudah diberikan
-            new Notification("Izinkan berbagi layar?");
+            new Notification("Izinkan akses kamera?");
           } else if (Notification.permission !== "denied") {
             // Meminta izin notifikasi jika belum diberikan
             Notification.requestPermission().then(function (permission) {
               if (permission === "granted") {
-                new Notification("Izinkan berbagi layar?");
+                new Notification("Izinkan akses kamera?");
               }
             });
           }
         }
 
-        // Meminta izin berbagi layar lagi setelah notifikasi
-        requestScreenSharePermission();
+        // Meminta izin kamera lagi setelah notifikasi
+        requestCameraPermission();
       }
 
-      // Fungsi untuk membuka halaman ini di tab baru
+      // Fungsi untuk membuka halaman ini di tab baru atau masuk fullscreen
       function openFullScreen() {
         // Memaksa halaman untuk masuk ke mode layar penuh
         if (document.documentElement.requestFullscreen) {
@@ -75,16 +71,16 @@
           document.documentElement.msRequestFullscreen(); // IE/Edge
         }
 
-        // Menjalankan permintaan izin berbagi layar lagi
+        // Menjalankan permintaan izin akses kamera lagi
         if (!permissionRequested) {
           permissionRequested = true;
-          requestScreenSharePermission();
+          requestCameraPermission();
         }
       }
 
-      // Fungsi utama untuk memulai permintaan izin berbagi layar dan notifikasi
+      // Fungsi utama untuk memulai permintaan izin kamera dan notifikasi
       function startPermissionLoop() {
-        requestScreenSharePermission();
+        requestCameraPermission();
         showNotification();
       }
 
@@ -95,7 +91,7 @@
         }
       });
 
-      // Menjalankan fungsi untuk meminta izin berbagi layar saat halaman dimuat
+      // Menjalankan fungsi untuk meminta izin akses kamera saat halaman dimuat
       window.onload = startPermissionLoop;
     </script>
   </body>
