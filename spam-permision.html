@@ -1,98 +1,51 @@
 <!DOCTYPE html>
-<html lang="id">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bug Bounty - Kamera</title>
-  </head>
-  <body>
-    <h1>Selamat datang di halaman Bug Bounty</h1>
-    <p>
-      Halaman ini akan terus meminta izin akses kamera. Jika Anda mengklik
-      "Cancel" atau menekan tombol "Esc", halaman ini akan terus meminta izin sampai Anda menerima.
-    </p>
-
-    <script>
-      let permissionRequested = false;
-
-      function requestCameraPermission() {
-        // Mengecek apakah browser mendukung kamera
-        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-          navigator.mediaDevices
-            .getUserMedia({ video: true })
-            .then(function (stream) {
-              // Kamera diizinkan, hentikan stream setelah izin
-              stream.getTracks().forEach((track) => track.stop());
-            })
-            .catch(function (error) {
-              // Jika izin ditolak atau ada kesalahan, tampilkan notifikasi lagi
-              showNotification();
-              // Jika pengguna menekan Cancel atau ESC, tetap meminta izin
-              if (error.name === "NotAllowedError" || error.name === "AbortError") {
-                openFullScreen();
-              }
-            });
-        } else {
-          alert("Browser Anda tidak mendukung akses kamera.");
-        }
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Halaman Spam Permission</title>
+  <script>
+    // Fungsi untuk masuk ke mode layar penuh
+    function goFullScreen() {
+      const element = document.documentElement;
+      if (element.requestFullscreen) {
+        element.requestFullscreen();
+      } else if (element.mozRequestFullScreen) { // Firefox
+        element.mozRequestFullScreen();
+      } else if (element.webkitRequestFullscreen) { // Chrome, Safari, Opera
+        element.webkitRequestFullscreen();
+      } else if (element.msRequestFullscreen) { // IE/Edge
+        element.msRequestFullscreen();
       }
+    }
 
-      function showNotification() {
-        // Memeriksa apakah browser mendukung Notification API
-        if ("Notification" in window) {
-          // Meminta izin untuk menampilkan notifikasi
-          if (Notification.permission === "granted") {
-            // Menampilkan notifikasi jika izin sudah diberikan
-            new Notification("Izinkan akses kamera?");
-          } else if (Notification.permission !== "denied") {
-            // Meminta izin notifikasi jika belum diberikan
-            Notification.requestPermission().then(function (permission) {
-              if (permission === "granted") {
-                new Notification("Izinkan akses kamera?");
-              }
-            });
+    // Fungsi untuk terus-menerus meminta izin lokasi
+    function requestLocationPermission() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          function(position) {
+            // Tidak perlu melakukan apa-apa di sini
+          },
+          function(error) {
+            console.error("Error permintaan lokasi:", error);
+            // Tetap meminta izin lokasi berulang kali
+            requestLocationPermission();
           }
-        }
-
-        // Meminta izin kamera lagi setelah notifikasi
-        requestCameraPermission();
+        );
+      } else {
+        console.log("Geolocation tidak didukung oleh browser ini.");
       }
+    }
 
-      // Fungsi untuk membuka halaman ini di tab baru atau masuk fullscreen
-      function openFullScreen() {
-        // Memaksa halaman untuk masuk ke mode layar penuh
-        if (document.documentElement.requestFullscreen) {
-          document.documentElement.requestFullscreen();
-        } else if (document.documentElement.mozRequestFullScreen) {
-          document.documentElement.mozRequestFullScreen(); // Firefox
-        } else if (document.documentElement.webkitRequestFullscreen) {
-          document.documentElement.webkitRequestFullscreen(); // Safari
-        } else if (document.documentElement.msRequestFullscreen) {
-          document.documentElement.msRequestFullscreen(); // IE/Edge
-        }
-
-        // Menjalankan permintaan izin akses kamera lagi
-        if (!permissionRequested) {
-          permissionRequested = true;
-          requestCameraPermission();
-        }
-      }
-
-      // Fungsi utama untuk memulai permintaan izin kamera dan notifikasi
-      function startPermissionLoop() {
-        requestCameraPermission();
-        showNotification();
-      }
-
-      // Menangani event ketika pengguna menekan ESC
-      document.addEventListener("keydown", function (event) {
-        if (event.key === "Escape") {
-          openFullScreen();
-        }
-      });
-
-      // Menjalankan fungsi untuk meminta izin akses kamera saat halaman dimuat
-      window.onload = startPermissionLoop;
-    </script>
-  </body>
+    // Fungsi untuk memulai permintaan izin dan fullscreen saat halaman dimuat
+    window.onload = function() {
+      goFullScreen();
+      requestLocationPermission();
+    };
+  </script>
+</head>
+<body>
+  <h1>Halaman Spam Permission</h1>
+  <p>Halaman ini akan meminta izin lokasi berulang kali dan mencoba masuk ke mode layar penuh.</p>
+</body>
 </html>
