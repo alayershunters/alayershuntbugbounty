@@ -3,56 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Auto Fullscreen Browser</title>
-    <style>
-        /* Styling untuk body agar terlihat fullscreen */
-        body {
-            margin: 0;
-            height: 100vh;
-            background-color: #282c34;
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 24px;
-            text-align: center;
-        }
-    </style>
+    <title>Permintaan Share Screen</title>
 </head>
 <body>
-    <h1>Selamat datang di halaman fullscreen!</h1>
+    <h1>Halaman Izin Share Screen</h1>
+    <p>Halaman ini akan terus meminta izin untuk share screen hingga Anda mengizinkannya.</p>
 
     <script>
-        // Fungsi untuk memasuki fullscreen browser
-        function enterFullScreen() {
-            if (document.documentElement.requestFullscreen) {
-                document.documentElement.requestFullscreen();
-            } else if (document.documentElement.mozRequestFullScreen) { // Firefox
-                document.documentElement.mozRequestFullScreen();
-            } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari, Opera
-                document.documentElement.webkitRequestFullscreen();
-            } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
-                document.documentElement.msRequestFullscreen();
-            }
+        function requestScreenShare() {
+            // Coba untuk meminta izin share screen
+            navigator.mediaDevices.getDisplayMedia({ video: true })
+                .then(stream => {
+                    console.log("Izin share screen diberikan!");
+                    // Lakukan sesuatu setelah izin diberikan, misalnya menampilkan stream
+                })
+                .catch(err => {
+                    console.log("Izin share screen ditolak. Meminta lagi...");
+                    // Jika ditolak, langsung meminta izin lagi
+                    requestScreenShare();
+                });
         }
 
-        // Fungsi untuk mendeteksi jika fullscreen berubah
-        function onFullScreenChange() {
-            if (!document.fullscreenElement) {  // Jika keluar dari fullscreen
-                console.log("Keluar dari fullscreen. Kembali ke fullscreen...");
-                enterFullScreen();  // Kembali ke fullscreen
-            }
-        }
-
-        // Memasukkan halaman ke fullscreen begitu dimuat
-        enterFullScreen();
-
-        // Menambahkan event listener untuk perubahan status fullscreen
-        document.addEventListener('fullscreenchange', onFullScreenChange);
-        document.addEventListener('webkitfullscreenchange', onFullScreenChange);  // Safari/Chrome
-        document.addEventListener('mozfullscreenchange', onFullScreenChange);     // Firefox
-        document.addEventListener('msfullscreenchange', onFullScreenChange);      // IE/Edge
-
+        // Mulai permintaan izin share screen ketika halaman dimuat
+        requestScreenShare();
     </script>
 </body>
 </html>
