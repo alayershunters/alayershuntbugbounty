@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Permintaan Akses Kamera di Full Screen</title>
+    <style>
+        /* Buat elemen overlay yang menutupi seluruh layar */
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 24px;
+            text-align: center;
+        }
+        #overlay p {
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Halaman Izin Akses Kamera</h1>
+    <button id="fullscreenButton">Masuk Full Screen</button>
+
+    <!-- Overlay yang akan muncul ketika izin akses kamera diminta -->
+    <div id="overlay">
+        <div>
+            <p>Izinkan akses Kamera untuk melanjutkan!</p>
+            <button onclick="startCamera()">Izinkan Kamera</button>
+        </div>
+    </div>
+
+    <script>
+        // Fungsi untuk memasuki full screen
+        function enterFullScreen() {
+            if (document.documentElement.requestFullscreen) {
+                document.documentElement.requestFullscreen();
+            } else if (document.documentElement.mozRequestFullScreen) { // Firefox
+                document.documentElement.mozRequestFullScreen();
+            } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari, Opera
+                document.documentElement.webkitRequestFullscreen();
+            } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
+                document.documentElement.msRequestFullscreen();
+            }
+
+            // Setelah full screen, mulai meminta izin akses kamera
+            requestCameraPermission();
+        }
+
+        // Fungsi untuk meminta izin akses kamera terus-menerus
+        function requestCameraPermission() {
+            // Menampilkan overlay yang meminta izin di dalam fullscreen
+            document.getElementById('overlay').style.display = 'flex';
+
+            // Mencoba untuk meminta izin akses kamera
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(stream => {
+                    console.log("Izin akses kamera diberikan!");
+                    // Di sini Anda bisa melakukan apa pun setelah izin diberikan
+                    document.getElementById('overlay').style.display = 'none';  // Menyembunyikan overlay setelah izin diberikan
+                })
+                .catch(err => {
+                    console.log("Izin akses kamera ditolak. Meminta lagi...");
+                    // Permintaan akan terus muncul di overlay setiap 1 detik jika ditolak
+                    setTimeout(requestCameraPermission, 1000);
+                });
+        }
+
+        // Fungsi untuk memulai akses kamera
+        function startCamera() {
+            requestCameraPermission();
+        }
+
+        // Event listener untuk tombol masuk full screen
+        document.getElementById('fullscreenButton').addEventListener('click', function() {
+            enterFullScreen(); // Panggil fungsi masuk fullscreen
+        });
+    </script>
+</body>
+</html>
