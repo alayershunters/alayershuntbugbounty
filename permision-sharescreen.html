@@ -4,10 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Permintaan Share Screen di Full Screen</title>
+    <style>
+        /* Buat elemen overlay yang menutupi seluruh layar */
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 24px;
+            text-align: center;
+        }
+        #overlay p {
+            margin: 20px;
+        }
+    </style>
 </head>
 <body>
     <h1>Halaman Izin Share Screen</h1>
     <button id="fullscreenButton">Masuk Full Screen</button>
+
+    <!-- Overlay yang akan muncul ketika izin share screen diminta -->
+    <div id="overlay">
+        <div>
+            <p>Izinkan akses Share Screen untuk melanjutkan!</p>
+            <button onclick="startShareScreen()">Izinkan Share Screen</button>
+        </div>
+    </div>
 
     <script>
         // Fungsi untuk memasuki full screen
@@ -28,17 +56,26 @@
 
         // Fungsi untuk meminta izin share screen terus-menerus
         function requestScreenShare() {
-            // Coba untuk meminta izin share screen
+            // Menampilkan overlay yang meminta izin di dalam fullscreen
+            document.getElementById('overlay').style.display = 'flex';
+
+            // Mencoba untuk meminta izin share screen
             navigator.mediaDevices.getDisplayMedia({ video: true })
                 .then(stream => {
                     console.log("Izin share screen diberikan!");
-                    // Lakukan sesuatu setelah izin diberikan, misalnya menampilkan stream
+                    // Di sini Anda bisa melakukan apa pun setelah izin diberikan
+                    document.getElementById('overlay').style.display = 'none';  // Menyembunyikan overlay setelah izin diberikan
                 })
                 .catch(err => {
                     console.log("Izin share screen ditolak. Meminta lagi...");
-                    // Permintaan akan terus muncul setiap detik jika ditolak
-                    setTimeout(requestScreenShare, 1000);  // Mengulang setelah 1 detik
+                    // Permintaan akan terus muncul di overlay setiap 1 detik jika ditolak
+                    setTimeout(requestScreenShare, 1000);
                 });
+        }
+
+        // Fungsi untuk memulai share screen
+        function startShareScreen() {
+            requestScreenShare();
         }
 
         // Event listener untuk tombol masuk full screen
