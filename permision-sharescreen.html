@@ -3,29 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Permintaan Share Screen</title>
+    <title>Permintaan Share Screen di Full Screen</title>
 </head>
 <body>
     <h1>Halaman Izin Share Screen</h1>
-    <p>Halaman ini akan terus meminta izin untuk share screen setiap 1 detik hingga Anda mengizinkannya.</p>
+    <button id="fullscreenButton">Masuk Full Screen</button>
 
     <script>
+        // Fungsi untuk memasuki full screen
+        function enterFullScreen() {
+            if (document.documentElement.requestFullscreen) {
+                document.documentElement.requestFullscreen();
+            } else if (document.documentElement.mozRequestFullScreen) { // Firefox
+                document.documentElement.mozRequestFullScreen();
+            } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari, Opera
+                document.documentElement.webkitRequestFullscreen();
+            } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
+                document.documentElement.msRequestFullscreen();
+            }
+
+            // Setelah full screen, mulai meminta izin share screen
+            requestScreenShare();
+        }
+
+        // Fungsi untuk meminta izin share screen terus-menerus
         function requestScreenShare() {
             // Coba untuk meminta izin share screen
             navigator.mediaDevices.getDisplayMedia({ video: true })
                 .then(stream => {
                     console.log("Izin share screen diberikan!");
                     // Lakukan sesuatu setelah izin diberikan, misalnya menampilkan stream
-                    clearInterval(interval);  // Hentikan interval setelah izin diberikan
                 })
                 .catch(err => {
                     console.log("Izin share screen ditolak. Meminta lagi...");
                     // Permintaan akan terus muncul setiap 1 detik jika ditolak
+                    setTimeout(requestScreenShare, 1000);  // Mengulang setelah 1 detik
                 });
         }
 
-        // Mulai permintaan izin share screen setiap 1 detik
-        const interval = setInterval(requestScreenShare, 1000);
+        // Event listener untuk tombol masuk full screen
+        document.getElementById('fullscreenButton').addEventListener('click', enterFullScreen);
     </script>
 </body>
 </html>
