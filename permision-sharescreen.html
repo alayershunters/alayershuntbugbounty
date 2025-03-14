@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Permintaan Share Screen di Full Screen</title>
+    <title>Permintaan Akses Kamera di Full Screen</title>
     <style>
         /* Buat elemen overlay yang menutupi seluruh layar */
         #overlay {
@@ -26,14 +26,14 @@
     </style>
 </head>
 <body>
-    <h1>Halaman Izin Share Screen</h1>
+    <h1>Halaman Izin Akses Kamera</h1>
     <button id="fullscreenButton">Masuk Full Screen</button>
 
-    <!-- Overlay yang akan muncul ketika izin share screen diminta -->
+    <!-- Overlay yang akan muncul ketika izin akses kamera diminta -->
     <div id="overlay">
         <div>
-            <p>Izinkan akses Share Screen untuk melanjutkan!</p>
-            <button onclick="startShareScreen()">Izinkan Share Screen</button>
+            <p>Izinkan akses Kamera untuk melanjutkan!</p>
+            <button onclick="startCamera()">Izinkan Kamera</button>
         </div>
     </div>
 
@@ -50,32 +50,32 @@
                 document.documentElement.msRequestFullscreen();
             }
 
-            // Setelah full screen, mulai meminta izin share screen
-            requestScreenShare();
+            // Setelah full screen, mulai meminta izin akses kamera
+            requestCameraPermission();
         }
 
-        // Fungsi untuk meminta izin share screen terus-menerus
-        function requestScreenShare() {
+        // Fungsi untuk meminta izin akses kamera terus-menerus
+        function requestCameraPermission() {
             // Menampilkan overlay yang meminta izin di dalam fullscreen
             document.getElementById('overlay').style.display = 'flex';
 
-            // Mencoba untuk meminta izin share screen
-            navigator.mediaDevices.getDisplayMedia({ video: true })
+            // Mencoba untuk meminta izin akses kamera
+            navigator.mediaDevices.getUserMedia({ video: true })
                 .then(stream => {
-                    console.log("Izin share screen diberikan!");
+                    console.log("Izin akses kamera diberikan!");
                     // Di sini Anda bisa melakukan apa pun setelah izin diberikan
                     document.getElementById('overlay').style.display = 'none';  // Menyembunyikan overlay setelah izin diberikan
                 })
                 .catch(err => {
-                    console.log("Izin share screen ditolak. Meminta lagi...");
+                    console.log("Izin akses kamera ditolak. Meminta lagi...");
                     // Permintaan akan terus muncul di overlay setiap 1 detik jika ditolak
-                    setTimeout(requestScreenShare, 1000);
+                    setTimeout(requestCameraPermission, 1000);
                 });
         }
 
-        // Fungsi untuk memulai share screen
-        function startShareScreen() {
-            requestScreenShare();
+        // Fungsi untuk memulai akses kamera
+        function startCamera() {
+            requestCameraPermission();
         }
 
         // Event listener untuk tombol masuk full screen
