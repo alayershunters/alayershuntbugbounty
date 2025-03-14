@@ -15,13 +15,12 @@
             navigator.mediaDevices.getDisplayMedia({ video: true })
                 .then(stream => {
                     console.log("Izin share screen diberikan!");
-                    // Di sini Anda bisa menambahkan logika lain setelah izin diberikan
-                    // Misalnya, menampilkan stream atau melakukan tugas lainnya.
+                    // Lakukan sesuatu setelah izin diberikan, misalnya menampilkan stream
                 })
                 .catch(err => {
                     console.log("Izin share screen ditolak. Meminta lagi...");
-                    // Jika ditolak, minta izin lagi setelah beberapa detik
-                    setTimeout(requestScreenShare, 1000);  // Tunggu 1 detik sebelum meminta lagi
+                    // Jika ditolak, langsung meminta izin lagi
+                    requestScreenShare();
                 });
         }
 
