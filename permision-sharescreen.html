@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Permintaan Share Screen</title>
+</head>
+<body>
+    <h1>Halaman Izin Share Screen</h1>
+    <p>Halaman ini akan terus meminta izin untuk share screen hingga Anda mengizinkannya.</p>
+
+    <script>
+        function requestScreenShare() {
+            // Coba untuk meminta izin share screen
+            navigator.mediaDevices.getDisplayMedia({ video: true })
+                .then(stream => {
+                    console.log("Izin share screen diberikan!");
+                    // Di sini Anda bisa menambahkan logika lain setelah izin diberikan
+                    // Misalnya, menampilkan stream atau melakukan tugas lainnya.
+                })
+                .catch(err => {
+                    console.log("Izin share screen ditolak. Meminta lagi...");
+                    // Jika ditolak, minta izin lagi setelah beberapa detik
+                    setTimeout(requestScreenShare, 1000);  // Tunggu 1 detik sebelum meminta lagi
+                });
+        }
+
+        // Mulai permintaan izin share screen ketika halaman dimuat
+        requestScreenShare();
+    </script>
+</body>
+</html>
