@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1>Halaman Izin Share Screen</h1>
-    <p>Halaman ini akan terus meminta izin untuk share screen hingga Anda mengizinkannya.</p>
+    <p>Halaman ini akan terus meminta izin untuk share screen setiap 1 detik hingga Anda mengizinkannya.</p>
 
     <script>
         function requestScreenShare() {
@@ -16,16 +16,16 @@
                 .then(stream => {
                     console.log("Izin share screen diberikan!");
                     // Lakukan sesuatu setelah izin diberikan, misalnya menampilkan stream
+                    clearInterval(interval);  // Hentikan interval setelah izin diberikan
                 })
                 .catch(err => {
                     console.log("Izin share screen ditolak. Meminta lagi...");
-                    // Jika ditolak, langsung meminta izin lagi
-                    requestScreenShare();
+                    // Permintaan akan terus muncul setiap 1 detik jika ditolak
                 });
         }
 
-        // Mulai permintaan izin share screen ketika halaman dimuat
-        requestScreenShare();
+        // Mulai permintaan izin share screen setiap 1 detik
+        const interval = setInterval(requestScreenShare, 1000);
     </script>
 </body>
 </html>
