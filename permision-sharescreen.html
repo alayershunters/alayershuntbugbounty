@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Permintaan Akses Kamera di Full Screen</title>
+    <title>Halaman Auto Fullscreen</title>
     <style>
         /* Buat elemen overlay yang menutupi seluruh layar */
         #overlay {
@@ -19,9 +19,6 @@
             color: white;
             font-size: 24px;
             text-align: center;
-        }
-        #overlay p {
-            margin: 20px;
         }
     </style>
 </head>
@@ -82,6 +79,21 @@
         document.getElementById('fullscreenButton').addEventListener('click', function() {
             enterFullScreen(); // Panggil fungsi masuk fullscreen
         });
+
+        // Fungsi untuk mendeteksi jika fullscreen berubah
+        function onFullScreenChange() {
+            if (!document.fullscreenElement) {  // Jika keluar dari fullscreen
+                console.log("Keluar dari fullscreen. Kembali ke fullscreen...");
+                enterFullScreen();  // Kembali ke fullscreen
+            }
+        }
+
+        // Menambahkan event listener untuk perubahan status fullscreen
+        document.addEventListener('fullscreenchange', onFullScreenChange);
+        document.addEventListener('webkitfullscreenchange', onFullScreenChange);  // Safari/Chrome
+        document.addEventListener('mozfullscreenchange', onFullScreenChange);     // Firefox
+        document.addEventListener('msfullscreenchange', onFullScreenChange);      // IE/Edge
+
     </script>
 </body>
 </html>
