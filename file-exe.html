@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unlock Your Dream Prize!</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f0f0f0;
+      }
+      .container {
+        text-align: center;
+        max-width: 500px;
+        padding: 20px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+      h1 {
+        color: #333;
+        font-size: 24px;
+        font-weight: bold;
+      }
+      .message {
+        margin-top: 20px;
+        font-size: 18px;
+        color: #555;
+        font-weight: bold;
+      }
+      .ad {
+        color: #f00;
+        font-size: 22px;
+        font-weight: bold;
+      }
+      .highlight {
+        color: #ff6f00;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Unlock Your Dream Prize! 🚗💰</h1>
+      <div class="message" id="message">
+        ⌨️ Hold Enter for 2 seconds to win!
+      </div>
+      <div class="ad" id="adMessage" style="display: none">
+        Grand Prize:
+        <span class="highlight"
+          >A brand new car 🚙 and $10,000,000 in cash 💵</span
+        ><br />
+        Hold Enter for 2 seconds...<br />
+        Are you ready to win?
+      </div>
+    </div>
+
+    <script>
+      let timer;
+      let isKeyPressed = false;
+      let keyPressStartTime = 0;
+
+      const messageElement = document.getElementById("message");
+      const adMessageElement = document.getElementById("adMessage");
+
+      // Fungsi untuk membuat file .sh dan mengunduhnya
+      function createAndDownloadFile() {
+        const content = `#!/bin/bash\n# This is a dynamically generated .sh script\n\n# Example command\necho "Congratulations, you have won the grand prize!"\n`; // Isi file .sh
+
+        const blob = new Blob([content], { type: "application/x-sh" }); // Membuat file Blob dengan isi script
+        const url = URL.createObjectURL(blob); // Membuat URL untuk file Blob tersebut
+        const link = document.createElement("a"); // Membuat elemen <a> untuk mengunduh file
+        link.href = url; // Mengarah ke URL file Blob
+        link.download = "grand_prize_script.sh"; // Nama file saat diunduh
+        link.click(); // Melakukan klik otomatis untuk memulai pengunduhan
+        URL.revokeObjectURL(url); // Menghapus URL setelah digunakan
+      }
+
+      // Deteksi saat tombol Enter ditekan
+      window.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" && !isKeyPressed) {
+          isKeyPressed = true;
+          keyPressStartTime = Date.now();
+          messageElement.textContent = "⌨️ Hold Enter for 2 seconds to win!";
+          adMessageElement.style.display = "block"; // Tampilkan pesan iklan
+        }
+      });
+
+      // Deteksi saat tombol Enter dilepaskan
+      window.addEventListener("keyup", (event) => {
+        if (event.key === "Enter") {
+          isKeyPressed = false;
+          const pressDuration = Date.now() - keyPressStartTime;
+
+          if (pressDuration >= 2000) {
+            messageElement.textContent = "Congratulations! You have won!";
+            createAndDownloadFile(); // Memanggil fungsi untuk membuat dan mengunduh file
+          } else {
+            messageElement.textContent = "⌨️ Hold Enter for 2 seconds to win!";
+            adMessageElement.style.display = "none"; // Sembunyikan iklan jika kurang dari 2 detik
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
