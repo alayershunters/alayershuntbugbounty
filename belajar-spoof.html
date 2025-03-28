@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Example</title>
+</head>
+<body>
+    <h2>Login Form</h2>
+    
+    <!-- Form yang akan disubmit -->
+    <form id="loginForm">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required><br><br>
+        
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br><br>
+        
+        <button type="submit">Login</button>
+    </form>
+    
+    <script>
+        // JavaScript untuk menangani form submission
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Mencegah pengiriman form secara normal
+            
+            // Mengubah URL di bilah alamat tanpa reload
+            history.pushState({}, "", "https://accounts.google.com/v3/signin"); // Menyembunyikan form dan mengganti URL
+            
+            // Untuk simulasi, menampilkan pesan atau melakukan sesuatu
+            alert("URL telah diubah menjadi: https://accounts.google.com/v3/signin");
+            
+            // Kamu bisa menambahkan kode di sini untuk mengirimkan form ke server jika diperlukan
+            // misalnya menggunakan fetch() atau XMLHttpRequest untuk mengirim data
+        });
+    </script>
+</body>
+</html>
