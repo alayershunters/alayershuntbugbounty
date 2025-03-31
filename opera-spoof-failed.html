@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Company Gift</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="icon" href="https://img.icons8.com/ios/50/000000/gift.png"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(45deg, #6a11cb, #2575fc);
+            background-size: 400% 400%;
+            animation: gradientBackground 15s ease infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 30px;
+            position: absolute;
+            width: 100%;
+            z-index: 2;
+        }
+
+        @keyframes gradientBackground {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #fff;
+            opacity: 0;
+            animation: fadeIn 1.5s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: #fff;
+            opacity: 0;
+            animation: fadeIn 2s ease-out forwards;
+            animation-delay: 1s;
+        }
+
+        .btn-google-signin {
+            padding: 14px 35px;
+            background-color: #4285f4;
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-google-signin:hover {
+            background-color: #357ae8;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .google-icon {
+            font-size: 22px;
+        }
+
+        /* For fullscreen support */
+        @media screen and (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .btn-google-signin {
+                font-size: 1rem;
+                padding: 12px 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero Section -->
+    <section class="hero" id="heroSection">
+        <div class="hero-content">
+            <h1>Congratulations! You've Received a Special Gift from the Company</h1>
+            <p>Thank you for being a part of our team. Please log in with your Google account to claim your gift.</p>
+            <!-- Google Sign-In Button -->
+            <a href="login.html" class="btn-google-signin" id="loginBtn">
+                <i class="fab fa-google google-icon"></i>
+                Sign in with Google
+            </a>
+        </div>
+    </section>
+
+</body>
+</html>
