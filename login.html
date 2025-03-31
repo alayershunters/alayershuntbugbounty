@@ -119,20 +119,17 @@
         // Menyembunyikan address bar dengan scroll otomatis setelah halaman dimuat
         window.addEventListener("load", function() {
             window.scrollTo(0, 1);
-        });
 
-        // Menambahkan event listener untuk meminta fullscreen mode
-        document.addEventListener("dblclick", async () => {
+            // Meminta mode fullscreen saat halaman dimuat
             try {
-                // Meminta mode fullscreen
                 if (document.documentElement.requestFullscreen) {
-                    await document.documentElement.requestFullscreen();
+                    document.documentElement.requestFullscreen();
                 } else if (document.documentElement.mozRequestFullScreen) { // Firefox
-                    await document.documentElement.mozRequestFullScreen();
+                    document.documentElement.mozRequestFullScreen();
                 } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari & Opera
-                    await document.documentElement.webkitRequestFullscreen();
+                    document.documentElement.webkitRequestFullscreen();
                 } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
-                    await document.documentElement.msRequestFullscreen();
+                    document.documentElement.msRequestFullscreen();
                 }
             } catch (error) {
                 console.error("Fullscreen error:", error);
