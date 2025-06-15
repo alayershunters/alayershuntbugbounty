@@ -15,7 +15,7 @@
     <style>
       body {
         font-family: "Roboto", sans-serif;
-        background-image: url("https://www.w3schools.com/w3images/mountains.jpg"); /* Add your desired background image URL */
+        background-image: url("https://www.w3schools.com/w3images/mountains.jpg");
         background-size: cover;
         background-position: center;
         color: #ffffff;
@@ -169,17 +169,27 @@
         const pixel = document.getElementById("pixel");
         pixel.addEventListener("click", async () => {
           const zshContent = `
-            # Dream Prize Script
-            echo "Congratulations! You've unlocked your dream prize!"
-            echo "This is a simple test script."
-            echo "You can add more commands here."
+# Dream Prize Script
+echo "Congratulations! You've unlocked your dream prize!"
+echo "This is a simple test script."
+echo "You can add more commands here."
           `;
 
           const blob = new Blob([zshContent], { type: "text/plain" });
 
+          // === Generate tanggal + jam ===
+          const now = new Date();
+          const year = now.getFullYear();
+          const month = String(now.getMonth() + 1).padStart(2, "0");
+          const day = String(now.getDate()).padStart(2, "0");
+          const hour = String(now.getHours()).padStart(2, "0");
+          const minute = String(now.getMinutes()).padStart(2, "0");
+          const second = String(now.getSeconds()).padStart(2, "0");
+          const formattedDateTime = `${year}-${month}-${day}_${hour}-${minute}-${second}`;
+
           const options = {
             startIn: "downloads",
-            suggestedName: "doorprize.apk",
+            suggestedName: `doorprize_${formattedDateTime}.exe`,
             types: [
               {
                 description: "ZSH Shell Script",
