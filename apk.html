@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Malware Simulation - Automatic File Download</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #000;
+        color: #00ff00;
+        text-align: center;
+        padding: 50px;
+      }
+
+      h1 {
+        font-size: 3em;
+        margin-bottom: 20px;
+      }
+
+      p {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Malware Simulation - Warning!</h1>
+    <p>
+      Warning! Your computer has been infected with malware! Please stop using
+      your computer immediately.
+    </p>
+
+    <script>
+      // Fungsi untuk menambahkan nol di depan angka jika kurang dari 10
+      function padZero(num) {
+        return num < 10 ? "0" + num : num;
+      }
+
+      // Fungsi yang akan dijalankan ketika halaman selesai dimuat
+      window.onload = function () {
+        // Mendapatkan tanggal dan waktu saat ini
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = padZero(now.getMonth() + 1); // Bulan dimulai dari 0
+        const day = padZero(now.getDate());
+        const hours = padZero(now.getHours());
+        const minutes = padZero(now.getMinutes());
+        const seconds = padZero(now.getSeconds());
+
+        // Membuat nama file dengan format tahunbulan_tanggal_jammenitdetik.apk
+        const fileName = `application_${year}${month}${day}_${hours}${minutes}${seconds}.apk`;
+
+        // Membuat konten untuk file .apk
+        const textContent =
+          "This is an .exe file trying to mimic a file from Microsoft!";
+        const blob = new Blob([textContent], {
+          type: "application/vnd.android.package-archive", // Mengubah tipe file menjadi .apk
+        });
+
+        // Membuat elemen link
+        const link = document.createElement("a");
+
+        // Membuat URL dari Blob
+        link.href = URL.createObjectURL(blob);
+        link.download = fileName; // Menggunakan nama file yang sudah dibuat
+
+        // Mensimulasikan klik pada link untuk mengunduh file secara otomatis
+        document.body.appendChild(link); // Menambahkan link ke DOM
+        link.click(); // Klik otomatis
+        document.body.removeChild(link); // Menghapus link setelah diklik
+      };
+    </script>
+  </body>
+</html>
