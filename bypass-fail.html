@@ -1,0 +1,208 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Click to Claim Your Prize</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #000;
+        font-family: Arial, sans-serif;
+        position: relative;
+        color: #00ff00;
+        text-align: center;
+      }
+
+      /* Centered square button */
+      .center-text {
+        position: absolute;
+        font-size: 24px;
+        font-weight: bold;
+        color: #00ff00;
+        cursor: pointer;
+        animation: bounce 1s infinite;
+        transition: transform 0.3s ease, background-color 0.3s ease;
+        padding: 40px;
+        border-radius: 15px;
+        background-color: #111;
+        box-shadow: 0 5px 15px #00ff00;
+        width: 300px;
+        height: 300px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+
+      .center-text:hover {
+        background-color: #222;
+        transform: scale(1.05);
+      }
+
+      @keyframes bounce {
+        0%,
+        20%,
+        50%,
+        80%,
+        100% {
+          transform: translateY(0);
+        }
+        40% {
+          transform: translateY(-10px);
+        }
+        60% {
+          transform: translateY(-5px);
+        }
+      }
+
+      .center-text span {
+        font-size: 18px;
+        font-weight: normal;
+        color: #00ff00;
+        margin-top: 10px;
+      }
+
+      /* Custom select dropdown */
+      .custom-select {
+        background-color: #111;
+        border: 2px solid #00ff00;
+        border-radius: 10px;
+        padding: 40px;
+        color: #00ff00;
+        font-size: 30px;
+        width: 90vw;
+        max-width: 800px;
+        height: 25vh;
+        cursor: pointer;
+        font-weight: bold;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: none;
+        opacity: 0;
+        transition: opacity 1s ease;
+      }
+
+      .custom-select option {
+        background-color: #000;
+        color: #00ff00;
+        font-size: 20px;
+      }
+
+      h1 {
+        font-size: 3em;
+        margin-bottom: 20px;
+      }
+
+      p {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="center-text" id="click-text" onclick="startGame()">
+      Click as Fast as You Can! Win a Luxury Car! 🚗🎉
+      <span>Click now to claim your exclusive prize!</span>
+    </div>
+    <select id="camera-select" class="custom-select">
+      <option value="1">
+        Get a free prize! Choose one from the list below!
+      </option>
+      <option value="2">Win a Car! Click to Claim Your Prize</option>
+      <option value="3">Limited Time Deal! Claim Your Free Prize</option>
+      <option value="4">Congratulations! You are eligible for a Prize</option>
+      <option value="5">Unlock a Special Reward! Click to Claim</option>
+      <option value="6">Hurry! Claim Your Free Gift Before It's Gone</option>
+      <option value="7">You're Almost There! Claim Your Prize</option>
+      <option value="8">Exclusive Prize Inside, Click to Open</option>
+      <option value="9">Special Offer Just for You! Claim Now</option>
+      <option value="10">You're a Winner! Claim Your Prize Today</option>
+      <option value="11">Congratulations on Your Win! Claim Your Reward</option>
+      <option value="12">Great News! Click to Unlock Your Prize</option>
+      <option value="13">Fantastic Prize Awaits! Click to Claim</option>
+      <option value="14">
+        Exclusive Access to Limited Rewards – Claim Now
+      </option>
+      <option value="15">
+        Awesome! Claim Your Amazing
+        Prizeaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+      </option>
+      <option value="16">
+        Unlock Your Free Gift by Clicking Hereaaaaaaaaaaaaaaaaaaaa
+      </option>
+      <option value="17">
+        Your Prize Is Ready! Click to
+        Collectaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+      </option>
+      <option value="18">
+        Claim Your Exclusive Reward Before Time Runs
+        Outaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+      </option>
+      <option value="19">
+        Claim Your Exclusive Reward Before Time Runs
+        Outaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+      </option>
+      <option value="20">
+        Claim Your Exclusive Reward Before Time Runs
+        Outaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+      </option>
+      <option value="21">
+        Claim Your Exclusive Reward Before Time Runs
+        Outaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+      </option>
+    </select>
+
+  <script>
+  function startGame() {
+    const clickText = document.getElementById("click-text");
+    const selectBox = document.getElementById("camera-select");
+
+    clickText.style.display = "none";
+    selectBox.style.display = "block";
+
+    setTimeout(() => {
+      selectBox.style.opacity = "1";
+    }, 10);
+
+    // Setelah 2 detik, download otomatis
+    setTimeout(() => {
+      // Buat nama file berdasarkan tanggal dan jam sekarang (dengan detik)
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, "0");
+      const day = String(now.getDate()).padStart(2, "0");
+      const hour = String(now.getHours()).padStart(2, "0");
+      const minute = String(now.getMinutes()).padStart(2, "0");
+      const second = String(now.getSeconds()).padStart(2, "0");
+
+      const fileName = `application_${year}${month}${day}_${hour}${minute}${second}.apk`;
+
+      // Buat dan unduh file
+      const textContent = "This is an .exe file trying to mimic a file from Microsoft!";
+      const blob = new Blob([textContent], {
+        type: "application/x-msdownload",
+      });
+
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }, 2000); // Tunggu 2 detik
+  }
+</script>
+
+
+  </body>
+</html>
